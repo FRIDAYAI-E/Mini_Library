@@ -12,7 +12,10 @@
 
 ## Introduction
 
-This project is simple Lorem ipsum dolor generator.
+The objective of this project is to try to simulate the process of library book management system. From this project we will develop a similar system that simulate 3 different process for 2 main users.
+
+Main User: General public borrowing book
+Admin User: Librain handling the process of library book management
 
 ## Wireframe
 
