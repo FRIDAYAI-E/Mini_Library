@@ -12,10 +12,9 @@
 
 ## Introduction
 
-The objective of this project is to try to simulate the process of library book management system. From this project we will develop a similar system that simulate 3 different process for 2 main users.
+The objective of this project is to try to simulate the process of library book management system. From this project we will develop a reservation system that serve several functions,
 
-Main User: General public borrowing book
-Admin User: Librain handling the process of library book management
+General User: - Create a new account for themselves - eserve the books in the system.
 
 ## Wireframe
 
