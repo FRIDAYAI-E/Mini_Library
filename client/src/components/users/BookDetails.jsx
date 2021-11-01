@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { counterAtom } from "./BrowseBooks"
+import { useAtom } from 'jotai'
 // import { useHistory } from "react-router-dom";
 
 
@@ -45,10 +47,14 @@ function BookDetails() {
       session: "testing" //! FAKE SESSION ID
   }
 
+
+  const data = useAtom(counterAtom)[0]
+  console.log("atom", data)
+
   // let history = useHistory()
 
   const handleBooking = async(bookID, sessionID) => {
-      console.log(bookID)
+      // console.log(bookID)
       const data = {bookID: bookID, userID:sessionID}
       await axios.post(`/api/onLoan/`, data)
       .then(res=>{
@@ -61,7 +67,6 @@ function BookDetails() {
 
   return (
     <div>
-      <h1>Network Status: {status} </h1>
       <Paper
         sx={{
           p: 4,
@@ -71,10 +76,10 @@ function BookDetails() {
           maxheight: 400,
         }}
       >
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           <Grid item>
             <ButtonBase sx={{ width: 200, height: 200 }}>
-              <Img alt="complex" src={bookDetails.img} />
+              <Img alt="complex" src={data.bookImg} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
@@ -85,19 +90,19 @@ function BookDetails() {
                   variant="h5"
                   component="div"
                   sx={{ textAlign: "left" }}>
-                  {bookDetails.title}
+                  {data.title}
                 </Typography>
                 <Typography
                   variant="body2"
                   gutterBottom
                   sx={{ textAlign: "left" }}
                 >
-                  Description: 
+                  Genre: {data.genre}
                 </Typography>
                 <Typography 
                   variant="subtitle2"
-                  sx={{ textAlign: "left" }}>
-                      {bookDetails.description} 
+                  sx={{ textAlign: "left", paddingTop: 4, paddingBottom: 10}}>
+                      {data.description} 
                 </Typography>
               </Grid>
             </Grid>
