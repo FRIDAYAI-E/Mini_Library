@@ -11,7 +11,8 @@ const onLoanController = require("./controllers/onLoan_controller")
 const project_3 = 'alibrary'
 const app = express();
 const PORT = process.env.PORT ?? 3001;
-const MONGODB_URI = process.env.MONGODB_URI ?? `mongodb://localhost:27017/${project_3}`; // to be switch to atlas
+const MONGODB_URI = process.env.MONGODB_URI ?? `mongodb+srv://ethansu:singapore@cluster0.2jd8n.mongodb.net/${project_3}?retryWrites=true&w=majority`;
+// to be switch to atlas
 
 
 //* Database Error / Disconnection
