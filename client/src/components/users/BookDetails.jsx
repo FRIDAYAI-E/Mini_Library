@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 
 function BookDetails() {
@@ -45,7 +45,7 @@ function BookDetails() {
       session: "testing" //! FAKE SESSION ID
   }
 
-  let history = useHistory()
+  // let history = useHistory()
 
   const handleBooking = async(bookID, sessionID) => {
       console.log(bookID)
@@ -61,6 +61,7 @@ function BookDetails() {
 
   return (
     <div>
+      <h1>Network Status: {status} </h1>
       <Paper
         sx={{
           p: 4,

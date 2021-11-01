@@ -14,6 +14,8 @@ import Remove from "@material-ui/icons/Remove";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import Info from "@material-ui/icons/Info";
+import {useEffect, useState} from "react"
+import axios from "axios"
 
 function BrowseBooks() {
   const tableIcons = {
@@ -34,31 +36,50 @@ function BrowseBooks() {
     ThirdStateCheck: Remove,
     ViewColumn: ViewColumn,
   };
+  const [status, setStatus] = useState("pending");
+  const [bookData, setBookData] = useState();
+  console.log(bookData)
 
-    const BookData = [{
-      title: " adventure chicken",
-      genre: "fiction",
-      rating: 4,
-      author: "mr chicken",
-      availability: "yes"
-    },
-    {
-      title: " adventure duck",
-      genre: "fiction",
-      rating: 1,
-      author: "mr duck",
-      availability: "no"
-    },{
-      title: " adventure potato",
-      genre: "fiction",
-      rating: 2,
-      author: "mr potato",
-      availability: "yes"
-    },]
+  useEffect( () => {
+    const getData = async() => {
+      try{
+        const response = await axios.get(`/api/book`)
+        setStatus("loading")
+        console.log("response.data", response.data)
+          setBookData(response.data)
+        setStatus("resolved")
+      } catch (error) {
+        console.log("error", error)
+      }
+    };
+    getData()    
+  }, []);
+
+    // const BookData = [{
+    //   title: " adventure chicken",
+    //   genre: "fiction",
+    //   rating: 4,
+    //   author: "mr chicken",
+    //   availability: "yes"
+    // },
+    // {
+    //   title: " adventure duck",
+    //   genre: "fiction",
+    //   rating: 1,
+    //   author: "mr duck",
+    //   availability: "no"
+    // },{
+    //   title: " adventure potato",
+    //   genre: "fiction",
+    //   rating: 2,
+    //   author: "mr potato",
+    //   availability: "yes"
+    // },]
 
   return (
     <>
       <div>
+        <h1>network status: {status} </h1>
         <MaterialTable
           style={{ boxShadow: "none", marginBottom: "3%" }}
           icons={tableIcons}
@@ -66,7 +87,7 @@ function BrowseBooks() {
             {
               title: "Title",
               field: "title",
-              align: "justify",
+              align: "left",
               defaultSort: "desc",
             },
             {
@@ -86,20 +107,18 @@ function BrowseBooks() {
             },
           ]}
           title="Browse Books"
-          data = {BookData}
+          data = {bookData}
           options={{
-            filtering: true,
-            pageSize: 5,
+            pageSize: 10,
             pageSizeOptions: [5, 10, 50],
-            thirdSortClick: false,
             draggable: false,
-            maxBodyHeight: "70vh",
+            maxBodyHeight: "100vh",
             tableLayout: "auto",
             showFirstLastPageButtons: false,
             headerStyle: {
               position: "sticky",
               height: 0,
-              background: "white",
+              background: "#DCDCDC",
             },
           }}
         />

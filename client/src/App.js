@@ -6,6 +6,9 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import ManageBooks from "./components/admin/ManageBooks";
 import BookUpdateCreate from "./components/admin/BookUpdateCreate";
 import ManageReturns from "./components/admin/ManageReturns";
+import UserDashboard from "./components/users/UserDashboard"
+import BrowseBooks from "./components/users/BrowseBooks"
+import BookDetails from "./components/users/BookDetails"
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
           {/* <Route exact path="/">
           <Login />
         </Route> */}
+        {
+          //!      ====================    Admin routes  =========================
+        }
           <Route path="/admin/dashboard">
             <AdminDashboard />
           </Route>
@@ -29,6 +35,18 @@ function App() {
           </Route>
           <Route path="/admin/managereturns">
             <ManageReturns />
+          </Route>
+          {
+          //!?     ====================    User routes  =========================
+        }
+          <Route path="/user/dashboard">
+          <UserDashboard/>
+          </Route>
+          <Route path="/browseBooks/:id">
+          <BookDetails/>
+          </Route>
+          <Route path="/browseBooks">
+          <BrowseBooks/>
           </Route>
         </Switch>
       </div>
