@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Users = require("../models/user.js");
+const bcrypt = require("bcrypt");
 const seedUsers = require("../models/seed_users.js");
 
 //* 5 + 2  REST routes => CREATE, ALL, READ1, UPDATE, DELETE (NEW Form, Edit Form)
@@ -8,10 +9,12 @@ const seedUsers = require("../models/seed_users.js");
 
 //* ROUTER => CREATE ROUTE
 router.post("/", (req, res) => {
+    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     Users.create(req.body, (err, createdBook) => {
         if (err) {
             res.status(400).json({ error: err.message });
         }
+        console.log("user is created")
         res.status(200).json(createdBook);
     });
 });
