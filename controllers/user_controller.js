@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Users = require("../models/user.js");
+const seedUsers = require("../models/seed_users.js");
 
 //* 5 + 2  REST routes => CREATE, ALL, READ1, UPDATE, DELETE (NEW Form, Edit Form)
 
@@ -25,6 +26,17 @@ router.post("/", (req, res) => {
     });
 });
 
+//* ROUTER => SEEDING ROUTE
+router.get('/seed', async (req, res) => {
+    try {
+        await Users.deleteMany({});
+        const seed = await Users.create(seedUsers)
+        res.send(seed);
+    } catch (err) {
+        res.send(err.message);
+    }
+
+})
 
 
 module.exports = router;
