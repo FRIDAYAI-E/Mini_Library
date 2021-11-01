@@ -14,6 +14,18 @@
 
 The objective of this project is to try to simulate the process of library book management system. From this project we will develop a reservation system that serve several functions,
 
+General User:  Create a new account for themselves - eserve the books in the system.
+
+- Create a new account for themselves
+- Edit of individual account
+- Reserve the book in the system
+
+Adminstrator:
+
+- Add new books
+- Edit current books
+- Handling of book returning
+=======
 General User: - Create a new account for themselves - eserve the books in the system.
 
 ## Wireframe
@@ -29,8 +41,8 @@ The system consist of the following features:
 Project is created with:
 
 - Mongodb
-- React.js
 - Express
+- React.js
 - Node.js
 
 Library used in the project:
@@ -39,6 +51,8 @@ Library used in the project:
 - [nodemon](https://www.npmjs.com/package/nodemon)
 - [mongoose](https://www.npmjs.com/package/mongoose)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [material_UI](https://mui.com/)
+- [axios](https://www.npmjs.com/package/axios)
 
 ## Setup
 
