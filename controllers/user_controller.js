@@ -15,6 +15,16 @@ router.get("/", (req, res) => {
     });
 });
 
+//* ROUTER => CREATE newUser ROUTE
+router.post("/", (req, res) => {
+    Users.create(req.body, (err, createdUsers) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(createdUsers);
+    });
+});
+
 
 
 module.exports = router;

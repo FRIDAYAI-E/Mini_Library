@@ -15,6 +15,16 @@ router.get("/", (req, res) => {
     });
 });
 
+//* ROUTER => CREATE ONLOAN ROUTE
+router.post("/", (req, res) => {
+    onLoans.create(req.body, (err, createdOnLoan) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(createdOnLoan);
+    });
+});
+
 
 
 module.exports = router;

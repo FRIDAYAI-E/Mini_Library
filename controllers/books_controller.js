@@ -15,6 +15,16 @@ router.get("/", (req, res) => {
     });
 });
 
+//* ROUTER => CREATE ROUTE
+router.post("/", (req, res) => {
+    Books.create(req.body, (err, createdBook) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(createdBook);
+    })
+})
+
 
 
 module.exports = router;
