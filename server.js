@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, "./client/src")));
 app.use(express.json());
 
 //* Controllers/Routes
-app.use("/api/books", booksController);
+app.use("/api/book", booksController);
 app.use("/api/user", userController);
 app.use("/api/onLoan", onLoanController);
 
