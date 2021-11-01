@@ -1,11 +1,39 @@
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Navbar from "../Navbar";
 import TableComponent from "../TableComponent";
 
+const columns = [
+  {
+    field: "title",
+    title: "Title",
+    align: "justify",
+    defaultSort: "asc",
+  },
+  {
+    field: "genre",
+    title: "Genre",
+    align: "justify",
+  },
+];
+
 const ManageBooks = () => {
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    const getBooks = async () => {
+      const res = await axios.get("/api/book");
+      setBooks(res.data);
+      console.log(res);
+    };
+    getBooks();
+  }, []);
   const handleAddBook = () => {};
+
+  const clickHandler = (e, rowData) => {
+    console.log("Row click", rowData);
+  };
 
   return (
     <div>
@@ -15,15 +43,14 @@ const ManageBooks = () => {
           Add Book
         </Button>
       </Box>
-      <Box>
-        <TextField
-          id="manage-books-search"
-          label="Outlined"
-          variant="outlined"
-        />
-        <TableComponent />
-        <Button variant="outlined">Back</Button>
-      </Box>
+      <TableComponent
+        title="Books Collection"
+        columns={columns}
+        data={books}
+        options={{ pageSize: 10 }}
+        click={clickHandler}
+      />
+      <Button variant="outlined">Back</Button>
     </div>
   );
 };
