@@ -1,12 +1,19 @@
 import './App.css';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import BookDetails from './components/users/BookDetails';
+// import UserDashboard from './components/users/UserDashboard';
+// import NewUser from './components/users/NewUser';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        
-        <h1>chicken nugget</h1>
-      </header>
+      <BrowserRouter> 
+        <h1>Router handler page</h1>
+        {/* <UserDashboard /> */}
+        {/* <NewUser /> */}
+        <BookDetails />
+      </BrowserRouter>
+
     </div>
   );
 }
