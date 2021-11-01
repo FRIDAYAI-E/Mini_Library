@@ -28,7 +28,7 @@ import {
 // import { DataGrid } from "@mui/x-data-grid";
 
 const TableComponent = (props) => {
-  const { title, columns, icons, options, data, click } = props;
+  const { id, title, columns, icons, options, data, click } = props;
   const tableIcons = icons ?? {
     Add: AddBox,
     Check: Check,
@@ -69,6 +69,7 @@ const TableComponent = (props) => {
 
   return (
     <MaterialTable
+      id={id}
       style={{ boxShadow: "none", marginBottom: "3%" }}
       icons={tableIcons}
       columns={columns}

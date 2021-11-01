@@ -36,7 +36,7 @@ const columns = [
     align: "center",
   },
   {
-    field: "collectionTotal",
+    field: "qty",
     title: "Collection Total",
     align: "center",
   },
@@ -46,8 +46,16 @@ const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
   useEffect(() => {
     const getBooks = async () => {
-      const res = await axios.get("/api/book");
-      setBooks(res);
+      const res = await axios.get("/api/admin/dashboard");
+      const data = res.data.map((d) => ({
+        title: d.title,
+        genre: d.genre,
+        timesBorrowed: d.timesBorrowed,
+        available: d.available,
+        loaned: d.loaned,
+        qty: d.qty,
+      }));
+      setBooks(data);
     };
     getBooks();
   }, []);

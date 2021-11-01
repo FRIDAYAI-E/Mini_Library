@@ -5,7 +5,9 @@ import Navbar from "../Navbar";
 
 const BookUpdateCreate = () => {
   const [genre, setGenre] = useState(["Fiction", "Non fiction"]);
-  useEffect(setGenre(["Fiction", "Non fiction"]), []);
+  useEffect(() => {
+    setGenre(["Fiction", "Non fiction"]);
+  }, []);
 
   const handleSelection = () => {};
 
