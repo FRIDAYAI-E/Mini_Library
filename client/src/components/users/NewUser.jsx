@@ -4,8 +4,7 @@ import axios from "axios"
 function NewUser() {
     
     const createNewUser = async (newUser) =>{
-
-        axios.post(`/api/user`, newUser)
+        await axios.post(`/api/user`, newUser)
         .then(res=>{
             console.log(res);
             console.log(res.data)
