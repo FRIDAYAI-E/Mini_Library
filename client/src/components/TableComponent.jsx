@@ -28,7 +28,7 @@ import {
 // import { DataGrid } from "@mui/x-data-grid";
 
 const TableComponent = (props) => {
-  const { title, columns, icons, options, data } = props;
+  const { title, columns, icons, options, data, click } = props;
   const tableIcons = icons ?? {
     Add: AddBox,
     Check: Check,
@@ -64,7 +64,8 @@ const TableComponent = (props) => {
     },
     ...options,
   };
-  console.log("options", tableOptions);
+
+  const rowClick = click ?? "";
 
   return (
     <MaterialTable
@@ -74,6 +75,7 @@ const TableComponent = (props) => {
       data={data}
       options={tableOptions}
       title={title}
+      onRowClick={rowClick}
     ></MaterialTable>
   );
 };

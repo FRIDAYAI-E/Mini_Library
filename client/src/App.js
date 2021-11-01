@@ -6,6 +6,7 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import ManageBooks from "./components/admin/ManageBooks";
 import BookUpdateCreate from "./components/admin/BookUpdateCreate";
 import ManageReturns from "./components/admin/ManageReturns";
+import BrowseBooks from "./components/users/BrowseBooks";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           {/* <Route exact path="/">
           <Login />
         </Route> */}
+          <Route path="/user/browse">
+            <BrowseBooks />
+          </Route>
           <Route path="/admin/dashboard">
             <AdminDashboard />
           </Route>

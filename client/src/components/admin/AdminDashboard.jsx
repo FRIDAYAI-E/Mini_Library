@@ -1,4 +1,5 @@
 import React from "react";
+// import { useHistory } from "react-router";
 import Navbar from "../Navbar";
 import { Box, Button } from "@mui/material";
 import TableComponent from "../TableComponent";
@@ -60,6 +61,11 @@ const AdminDashboard = () => {
       align: "center",
     },
   ];
+  // let history = useHistory();
+  const clickHandler = (e, rowData) => {
+    console.log("Row click", rowData);
+    // history.push("/");
+  };
   return (
     <div>
       <Navbar />
@@ -72,7 +78,8 @@ const AdminDashboard = () => {
           title="Books Overview"
           columns={columns}
           data={genDemodata(20)}
-          options={{ pageSize: 20 }}
+          options={{ pageSize: 10 }}
+          click={clickHandler}
         />
       </Box>
       {/* <NumberFormatter
