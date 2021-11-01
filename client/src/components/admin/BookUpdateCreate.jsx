@@ -5,6 +5,7 @@ import Navbar from "../Navbar";
 
 const BookUpdateCreate = () => {
   const [genre, setGenre] = useState(["Fiction", "Non fiction"]);
+  useEffect(setGenre(["Fiction", "Non fiction"]));
 
   const handleSelection = () => {};
 
@@ -20,7 +21,7 @@ const BookUpdateCreate = () => {
       <Box component="form">
         <TextField required label="Title"></TextField>
         <Select label="Genre" value={genre} onChange={handleSelection}>
-          {/* map menuitem(genre) */}
+          map menuitem(genre)
         </Select>
         <TextField required label="Quantity"></TextField>
         <TextField label="ImageUrl"></TextField>
