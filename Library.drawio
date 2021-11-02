@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e" pages="3">
     <diagram id="45T5d2dNW66gkccoMJ4-" name="WireFrame">
-        <mxGraphModel dx="746" dy="457" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" background="#F4F1DE" math="0" shadow="0">
+        <mxGraphModel dx="607" dy="788" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" background="#F4F1DE" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -627,7 +627,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="y24rWQGGqmF0FkkI2Lzz" name="Page Details">
-        <mxGraphModel dx="1001" dy="652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#F1FAEE" math="0" shadow="0">
+        <mxGraphModel dx="607" dy="788" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#F1FAEE" math="0" shadow="0">
             <root>
                 <mxCell id="ZcOqn7-boZQbMQNw9NuB-0"/>
                 <mxCell id="ZcOqn7-boZQbMQNw9NuB-1" parent="ZcOqn7-boZQbMQNw9NuB-0"/>
@@ -1151,7 +1151,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="kdznKhY70DQNZT67HAuW" name="Page-3">
-        <mxGraphModel dx="1189" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+        <mxGraphModel dx="607" dy="788" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
             <root>
                 <mxCell id="uO2vkYE46zifX1jB92wc-0"/>
                 <mxCell id="uO2vkYE46zifX1jB92wc-1" parent="uO2vkYE46zifX1jB92wc-0"/>

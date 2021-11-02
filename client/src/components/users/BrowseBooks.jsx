@@ -19,7 +19,7 @@ import axios from "axios"
 import { useHistory } from "react-router-dom";
 import { atom, useAtom } from "jotai"
 
-export const counterAtom = atom([])
+export const arrAtom = atom([])
 
 function BrowseBooks() {
   const tableIcons = {
@@ -42,17 +42,16 @@ function BrowseBooks() {
   };
   const [status, setStatus] = useState("pending");
   const [bookData, setBookData] = useState();
-  const [bookSelection, setBookSelection] = useAtom(counterAtom)
+  const [bookSelection, setBookSelection] = useAtom(arrAtom)
   
   useEffect( () => {
     const getData = async() => {
       try{
         const response = await axios.get(`/api/book`)
         setStatus("loading")
-        // console.log("response.data", response.data)
         setBookData(response.data)
-        console.log(bookData)
         setStatus("resolved")
+        console.log("network status:", status, bookData)
       } catch (error) {
         console.log("error", error)
       }
@@ -64,7 +63,6 @@ function BrowseBooks() {
   let history = useHistory()
 
   const handleRowClick = (event, rowData) => {
-      console.log(rowData)
       history.push(`/browseBooks/${rowData._id}`);
       console.log("bookSelection", bookSelection)
       setBookSelection(rowData)
@@ -94,7 +92,6 @@ function BrowseBooks() {
   return (
     <>
       <div>
-        <h1>network status: {status} </h1>
         <MaterialTable
           style={{ boxShadow: "none", marginBottom: "3%" }}
           icons={tableIcons}

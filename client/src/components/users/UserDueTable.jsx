@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import PropTypes from 'prop-types';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -27,19 +28,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, dueDate, ) {
-  return { name, dueDate, };
-}
+// function createData(name, dateBorrowed, ) {
+//   return { name, dateBorrowed, };
+// }
 
-const rows = [
-  createData('Adventure Chicken', "15/9/2021",),
-  createData('Adventure Duck', "21/9/2021",),
-  createData('Adventure Potato', "23/9/2021",),
-  createData('Adventure Nugget', "18/12/2021",),
-  createData('Adventure Sandwich', "24/10/2021",),
-];
+// const rows = [
+//   createData('Adventure Chicken', "15/9/2021",),
+//   createData('Adventure Duck', "21/9/2021",),
+//   createData('Adventure Potato', "23/9/2021",),
+//   createData('Adventure Nugget', "18/12/2021",),
+//   createData('Adventure Sandwich', "24/10/2021",),
+// ];
 
-export default function CustomizedTables() {
+ const UserDueTable = ({loanData}) => {
+  console.log("props", loanData[0].bookID)
+  // const loanData = props.loanData
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
@@ -50,12 +53,12 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {loanData.map((book, index) => (
+            <StyledTableRow key={index}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {book.bookID}
               </StyledTableCell>
-              <StyledTableCell align="center">{row.dueDate}</StyledTableCell>
+              <StyledTableCell align="center">{book.dateBorrowed}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -63,3 +66,10 @@ export default function CustomizedTables() {
     </TableContainer>
   );
 }
+
+UserDueTable.propTypes = {
+  loanData: PropTypes.array
+};
+
+
+export default UserDueTable;
