@@ -4,9 +4,8 @@ import axios from "axios"
 function NewUser() {
     
     const createNewUser = async (newUser) =>{
-        await axios.post(`/api/user`, newUser)
+        await axios.post("/api/user", newUser)
         .then(res=>{
-            console.log(res);
             console.log(res.data)
         })
     }
@@ -16,15 +15,20 @@ function NewUser() {
         event.preventDefault();
         const name = event.target.name.value;
         const password = event.target.password.value;
-        createNewUser({name: name, password: password})
+        const email = event.target.email.value
+        const role = "user"
+        createNewUser({name: name, password: password, email: email, role: role})
     }
 
 
   return (
     <div>
+      <h1>Create new User </h1>
       <form onSubmit={handleSubmit}>
         <input name="name" placeholder="name" />
         <input name="password" placeholder="Password" />
+        <input name="email" placeholder="Email" />
+
         <button>Create New User</button>
       </form>
     </div>

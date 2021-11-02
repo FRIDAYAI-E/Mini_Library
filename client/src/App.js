@@ -11,6 +11,7 @@ import BrowseBooks from "./components/users/BrowseBooks";
 import BookDetails from "./components/users/BookDetails";
 import SuccessBooking from "./components/users/SuccessBooking";
 import NewUser from "./components/users/NewUser";
+import LoginPage from "./components/LoginPage";
 
 function App() {
   return (
@@ -23,9 +24,14 @@ function App() {
           {
             //!      ====================    Admin routes  =========================
           }
-          <Route path="/user/browse">
-            <BrowseBooks />
+          <Route path="/login">
+            <LoginPage />
           </Route>
+
+          {
+            //!      ====================    Admin routes  =========================
+          }
+
           <Route path="/admin/dashboard">
             <AdminDashboard />
           </Route>

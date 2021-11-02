@@ -9,7 +9,8 @@ import axios from "axios";
 import { arrAtom } from "./BrowseBooks"
 import { useAtom } from 'jotai'
 import { useHistory } from "react-router-dom";
-
+import { sessionAtom } from "../LoginPage"
+import moment from 'moment';
 
 function BookDetails() {
   const Img = styled("img")({
@@ -34,21 +35,31 @@ function BookDetails() {
   });
 
 
-  const data = useAtom(arrAtom)[0]
-  console.log("atom", data)
-
+  const data = useAtom(sessionAtom)[0]
+  const bookData = useAtom(arrAtom)[0]
   let history = useHistory()
-  
+
+  const isAuthenticated = () => {
+    if(data.loginUser === undefined) {
+      history.push("/login");
+    }
+  }
+  isAuthenticated()
+
   const handleBooking = async(bookID, sessionID) => {
-    const newDate = new Date()
-    const data = {bookID: bookID, userID: sessionID, dateBorrowed: newDate}
+    console.log("bookID", bookID)
+    console.log("sessionID", sessionID)
+
+    const newDate = moment ()
+    const returnDate = moment().add(10,"d").toDate()
+    console.log("returnDate", returnDate)
+    const data = {bookID: bookID, userID: sessionID, dateBorrowed: newDate, dateReturned: returnDate}
       await axios.post(`/api/onLoan/`, data)
       .then(res=>{
         console.log(res.data)
     })
     history.push("/books/success");
 }
-
   return (
     <div>
       <Paper
@@ -63,7 +74,7 @@ function BookDetails() {
         <Grid container spacing={3}>
           <Grid item>
             <ButtonBase sx={{ width: 200, height: 200 }}>
-              <Img alt="complex" src={data.bookImg} />
+              <Img alt="complex" src={bookData.bookImg} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
@@ -74,19 +85,19 @@ function BookDetails() {
                   variant="h5"
                   component="div"
                   sx={{ textAlign: "left" }}>
-                  {data.title}
+                  {bookData.title}
                 </Typography>
                 <Typography
                   variant="body2"
                   gutterBottom
                   sx={{ textAlign: "left" }}
                 >
-                  Genre: {data.genre}
+                  Genre: {bookData.genre}
                 </Typography>
                 <Typography 
                   variant="subtitle2"
                   sx={{ textAlign: "left", paddingTop: 4, paddingBottom: 10}}>
-                      {data.description} 
+                      {bookData.description} 
                 </Typography>
               </Grid>
             </Grid>
@@ -98,7 +109,7 @@ function BookDetails() {
           </Grid>
         </Grid>
         <Grid>
-          <BookingButton variant="contained" onClick={()=> handleBooking(data._id, data._id)}> 
+          <BookingButton variant="contained" onClick={()=> handleBooking(bookData._id, data.loginUser._id)}> 
               Book! 
           </BookingButton>
         </Grid>
