@@ -18,6 +18,8 @@ import {useEffect, useState} from "react"
 import axios from "axios"
 import { useHistory } from "react-router-dom";
 import { atom, useAtom } from "jotai"
+import { sessionAtom } from "../LoginPage"
+
 
 export const arrAtom = atom([])
 
@@ -44,6 +46,19 @@ function BrowseBooks() {
   const [bookData, setBookData] = useState();
   const [bookSelection, setBookSelection] = useAtom(arrAtom)
   
+
+  const data = useAtom(sessionAtom)[0]
+  console.log("atom", data)
+  let history = useHistory()
+
+  const isAuthenticated = () => {
+    if(data.loginUser === undefined) {
+      history.push("/login");
+    }
+  }
+  isAuthenticated()
+
+
   useEffect( () => {
     const getData = async() => {
       try{
@@ -58,9 +73,6 @@ function BrowseBooks() {
     };
     getData()    
   }, []);
-
-
-  let history = useHistory()
 
   const handleRowClick = (event, rowData) => {
       history.push(`/browseBooks/${rowData._id}`);

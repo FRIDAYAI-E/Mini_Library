@@ -15,9 +15,11 @@ const isAuthenticated = (req, res, next) => {
 };
 
 
+
 //* ROUTER => CREATE ROUTE
 router.post("/", isAuthenticated, (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    console.log("req.body",req.body)
     Users.create(req.body, (err, createdBook) => {
         if (err) {
             res.status(400).json({ error: err.message });
@@ -94,7 +96,6 @@ router.put("/:id", isAuthenticated, (req, res) => {
         }
     );
 });
-
 
 
 module.exports = router;
