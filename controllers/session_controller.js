@@ -23,6 +23,7 @@ router.post("/", async (req, res) => {
     if (results) {
         console.log("session", req.session);
         req.session.loginUser = user;
+        req.session.admin = user.role
         console.log("new session", req.session)
         res.status(200).json(req.session);
     } else {
