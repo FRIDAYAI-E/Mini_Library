@@ -39,7 +39,6 @@ function userDashboard() {
       )}
         {/* <UserDueTable /> */}
         <UserFines />
-        <h1>Network status: {status}</h1>
       </div>
     </>
   );
