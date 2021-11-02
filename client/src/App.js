@@ -6,11 +6,11 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import ManageBooks from "./components/admin/ManageBooks";
 import BookUpdateCreate from "./components/admin/BookUpdateCreate";
 import ManageReturns from "./components/admin/ManageReturns";
-import UserDashboard from "./components/users/UserDashboard"
-import BrowseBooks from "./components/users/BrowseBooks"
-import BookDetails from "./components/users/BookDetails"
-import SuccessBooking from "./components/users/SuccessBooking"
-import NewUser from "./components/users/NewUser"
+import UserDashboard from "./components/users/UserDashboard";
+import BrowseBooks from "./components/users/BrowseBooks";
+import BookDetails from "./components/users/BookDetails";
+import SuccessBooking from "./components/users/SuccessBooking";
+import NewUser from "./components/users/NewUser";
 import LoginPage from "./components/LoginPage";
 
 function App() {
@@ -21,6 +21,9 @@ function App() {
           {/* <Route exact path="/">
           <Login />
         </Route> */}
+          {
+            //!      ====================    Admin routes  =========================
+          }
           <Route path="/login">
             <LoginPage />
           </Route>
@@ -28,21 +31,21 @@ function App() {
           {
             //!      ====================    Admin routes  =========================
           }
-          
+
           <Route path="/admin/dashboard">
             <AdminDashboard />
-          </Route>
-          <Route exact path="/admin/managebooks/new">
-            <BookUpdateCreate />
-          </Route>
-          <Route path="/admin/managebooks/:id/edit">
-            <BookUpdateCreate />
           </Route>
           <Route path="/admin/managebooks">
             <ManageBooks />
           </Route>
           <Route path="/admin/managereturns">
             <ManageReturns />
+          </Route>
+          <Route path="/admin/addcollection">
+            <BookUpdateCreate />
+          </Route>
+          <Route path="/admin/managebooks/:id/edit">
+            <BookUpdateCreate />
           </Route>
           {
             //!?     ====================    User routes  =========================

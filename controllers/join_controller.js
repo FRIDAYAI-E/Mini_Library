@@ -24,7 +24,6 @@ router.get("/admin/dashboard", async (req, res) => {
       data.push(b);
     }
   }
-  console.log("Admin dashboard", data);
   res.json(data);
 });
 

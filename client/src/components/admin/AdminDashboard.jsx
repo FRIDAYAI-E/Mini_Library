@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router";
 import axios from "axios";
 import Navbar from "../Navbar";
 import { Box, Button } from "@mui/material";
@@ -80,8 +80,8 @@ const AdminDashboard = () => {
   //   return arr;
   // };
 
-  // let history = useHistory();
-  const clickHandler = (e, rowData) => {
+  let history = useHistory();
+  const clickRowHandler = (e, rowData) => {
     console.log("Row click", rowData);
     // history.push("/");
   };
@@ -90,8 +90,22 @@ const AdminDashboard = () => {
     <div>
       <Navbar />
       <Box>
-        <Button variant="contained">Manage Books</Button>
-        <Button variant="contained">Manage Returns</Button>
+        <Button
+          onClick={() => {
+            history.push("/admin/managebooks");
+          }}
+          variant="contained"
+        >
+          Manage Books
+        </Button>
+        <Button
+          onClick={() => {
+            history.push("/admin/managereturns");
+          }}
+          variant="contained"
+        >
+          Manage Returns
+        </Button>
       </Box>
       <Box>
         <TableComponent
@@ -99,7 +113,7 @@ const AdminDashboard = () => {
           columns={columns}
           data={books}
           options={{ pageSize: 10 }}
-          click={clickHandler}
+          click={clickRowHandler}
         />
       </Box>
       {/* <NumberFormatter
