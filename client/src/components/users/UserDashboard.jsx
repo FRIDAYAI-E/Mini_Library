@@ -48,7 +48,7 @@ function userDashboard() {
     <>
       <div>
         {data.loginUser === undefined ?
-          (null ): (<h1>Welcome: {data?.loginUser?.name} </h1>)
+          (null ): (<h1>Welcome : {data?.loginUser?.name} </h1>)
         }
 
         
