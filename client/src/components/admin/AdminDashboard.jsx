@@ -1,65 +1,91 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+// import { useHistory } from "react-router";
+import axios from "axios";
 import Navbar from "../Navbar";
 import { Box, Button } from "@mui/material";
 import TableComponent from "../TableComponent";
-import faker from "faker";
+// import faker from "faker";
 // import NumberFormatter from "../NumberFormatter";
 // import DateFormatter from "../DateFormatter";
 
+const columns = [
+  {
+    field: "title",
+    title: "Title",
+    align: "justify",
+    defaultSort: "desc",
+  },
+  {
+    field: "genre",
+    title: "Genre",
+    align: "justify",
+  },
+  {
+    field: "timesBorrowed",
+    title: "Times Borrowed",
+    align: "center",
+  },
+  {
+    field: "available",
+    title: "Available",
+    align: "center",
+  },
+  {
+    field: "loaned",
+    title: "Loaned",
+    align: "center",
+  },
+  {
+    field: "qty",
+    title: "Collection Total",
+    align: "center",
+  },
+];
+
 const AdminDashboard = () => {
-  const genre = ["Classics ", "Adventure", "Reference", "Mystery"];
-  const genDemodata = (num) => {
-    const arr = [];
-    for (let i = 0; i < num; i++) {
-      const totalbooks = faker.datatype.number(10);
-      const loaned = faker.datatype.number(totalbooks);
-      const available = totalbooks - loaned;
-      arr.push({
-        id: i,
-        title: faker.lorem.words(Math.ceil(Math.random() * 7)),
-        genre: genre[Math.floor(Math.random() * genre.length)],
-        timesBorrowed: faker.datatype.number(1000),
-        available: available,
-        loaned: loaned,
-        totalbooks: totalbooks,
-      });
-    }
-    return arr;
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    const getBooks = async () => {
+      const res = await axios.get("/api/admin/dashboard");
+      const data = res.data.map((d) => ({
+        title: d.title,
+        genre: d.genre,
+        timesBorrowed: d.timesBorrowed,
+        available: d.available,
+        loaned: d.loaned,
+        qty: d.qty,
+      }));
+      setBooks(data);
+    };
+    getBooks();
+  }, []);
+
+  // const genre = ["Classics ", "Adventure", "Reference", "Mystery"];
+  // const genDemodata = (num) => {
+  //   const arr = [];
+  //   for (let i = 0; i < num; i++) {
+  //     const totalbooks = faker.datatype.number(10);
+  //     const loaned = faker.datatype.number(totalbooks);
+  //     const available = totalbooks - loaned;
+  //     arr.push({
+  //       id: i,
+  //       title: faker.lorem.words(Math.ceil(Math.random() * 7)),
+  //       genre: genre[Math.floor(Math.random() * genre.length)],
+  //       timesBorrowed: faker.datatype.number(1000),
+  //       available: available,
+  //       loaned: loaned,
+  //       totalbooks: totalbooks,
+  //     });
+  //   }
+  //   return arr;
+  // };
+
+  // let history = useHistory();
+  const clickHandler = (e, rowData) => {
+    console.log("Row click", rowData);
+    // history.push("/");
   };
 
-  const columns = [
-    {
-      field: "title",
-      title: "Title",
-      align: "justify",
-      defaultSort: "desc",
-    },
-    {
-      field: "genre",
-      title: "Genre",
-      align: "justify",
-    },
-    {
-      field: "timesBorrowed",
-      title: "Times Borrowed",
-      align: "center",
-    },
-    {
-      field: "available",
-      title: "Available",
-      align: "center",
-    },
-    {
-      field: "loaned",
-      title: "Loaned",
-      align: "center",
-    },
-    {
-      field: "collectionTotal",
-      title: "Collection Total",
-      align: "center",
-    },
-  ];
   return (
     <div>
       <Navbar />
@@ -71,8 +97,9 @@ const AdminDashboard = () => {
         <TableComponent
           title="Books Overview"
           columns={columns}
-          data={genDemodata(20)}
-          options={{ pageSize: 20 }}
+          data={books}
+          options={{ pageSize: 10 }}
+          click={clickHandler}
         />
       </Box>
       {/* <NumberFormatter
