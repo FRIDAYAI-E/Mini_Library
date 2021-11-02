@@ -8,8 +8,8 @@ const seedBooks = require("../models/seed_books.js");
 //* 5 + 2  REST routes => CREATE, ALL, READ, UPDATE, DELETE (NEW Form, Edit Form)
 
 //* ROUTER => CREATE ROUTE
-router.post("/", async (req, res) => {
-    await Books.create(req.body, (err, createdBook) => {
+router.post("/", (req, res) => {
+    Books.create(req.body, (err, createdBook) => {
         if (err) {
             res.status(400).json({ error: err.message });
         }
@@ -19,6 +19,22 @@ router.post("/", async (req, res) => {
 
 //* ROUTER => INDEX READ ROUTE
 router.get("/", (req, res) => {
+    try {
+        Books.find({}, (err, foundBooks) => {
+            if (err) {
+                res.status(400).json({ error: err.message });
+            }
+            res.status(200).json(foundBooks);
+        });
+    } catch (err) {
+        res.send(err.message);
+    }
+
+});
+
+//* ROUTER => SEPCIFIC ID ROUTE
+router.get("/:id", (req, res) => {
+    const { id } = req.params.id;
     try {
         Books.find({}, (err, foundBooks) => {
             if (err) {
@@ -56,7 +72,6 @@ router.put("/:id", (req, res) => {
         }
     );
 });
-
 
 
 //* ROUTER => SEED ROUTE
