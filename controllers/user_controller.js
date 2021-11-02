@@ -6,21 +6,18 @@ const seedUsers = require("../models/seed_users.js");
 
 //* 5 + 2  REST routes => CREATE, ALL, READ1, UPDATE, DELETE (NEW Form, Edit Form)
 
-//* ROUTER => SEEDING ROUTE
-router.get('/seed', async (req, res) => {
-    try {
-        await Users.deleteMany({});
-        const seed = await Users.create(seedUsers)
-        res.send(seed);
-    } catch (err) {
-        res.send(err.message);
+const isAuthenticated = (req, res, next) => {
+    if (req.session.loginUser) {
+        return next();
+    } else {
+        res.status(404).json({ message: "Authentication required" });
     }
+};
 
-})
 
 
 //* ROUTER => CREATE ROUTE
-router.post("/", (req, res) => {
+router.post("/", isAuthenticated, (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     console.log("req.body",req.body)
     Users.create(req.body, (err, createdBook) => {
@@ -47,6 +44,18 @@ router.get("/", (req, res) => {
 
 });
 
+//* ROUTER => SEEDING ROUTE
+router.get('/seed', async (req, res) => {
+    try {
+        await Users.deleteMany({});
+        const seed = await Users.create(seedUsers)
+        res.send(seed);
+    } catch (err) {
+        res.send(err.message);
+    }
+
+})
+
 //* ROUTER => INDEX READ ROUTE
 router.get("/:id", (req, res) => {
     const { id } = req.params.id;
@@ -64,7 +73,7 @@ router.get("/:id", (req, res) => {
 });
 
 //* ROUTER => DELETE ROUTE
-router.delete("/:id", (req, res) => {
+router.delete("/:id", isAuthenticated, (req, res) => {
     Users.findByIdAndDelete(req.params.id, (err, deletedUser) => {
         if (err) {
             res.status(400).json({ error: err.message });
@@ -74,7 +83,7 @@ router.delete("/:id", (req, res) => {
 })
 
 //* ROUTE = UPDATE ROUTE
-router.put("/:id", (req, res) => {
+router.put("/:id", isAuthenticated, (req, res) => {
     Users.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -87,8 +96,6 @@ router.put("/:id", (req, res) => {
         }
     );
 });
-
-
 
 
 module.exports = router;
