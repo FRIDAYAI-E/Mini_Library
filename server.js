@@ -3,15 +3,18 @@ require("dotenv").config();
 const path = require('path');
 const express = require("express");
 const mongoose = require("mongoose");
-const booksController = require("./controllers/books_controller")
-const userController = require("./controllers/user_controller")
-const onLoanController = require("./controllers/onLoan_controller")
+const session = require('express-session')
+const booksController = require("./controllers/books_controller");
+const userController = require("./controllers/user_controller");
+const onLoanController = require("./controllers/onLoan_controller");
+const sessionController = require('./controllers/session_controller');
 
 //* Config
 const project_3 = 'alibrary'
 const app = express();
 const PORT = process.env.PORT ?? 3001;
-const MONGODB_URI = process.env.MONGODB_URI ?? `mongodb+srv://ethansu:singapore@cluster0.2jd8n.mongodb.net/${project_3}?retryWrites=true&w=majority`;
+const MONGODB_URI = `mongodb+srv://ethansu:singapore@cluster0.2jd8n.mongodb.net/${project_3}?retryWrites=true&w=majority`;
+
 // to be switch to atlas
 
 
@@ -30,6 +33,13 @@ mongoose.connection.once("open", () => {
 });
 
 //* Middleware
+app.use(
+    session({
+        secret: 'hello', //a random string do not copy this value or your stuff will get hacked
+        resave: false, // default more info: https://www.npmjs.com/package/express-session#resave
+        saveUninitialized: false, // default  more info: https://www.npmjs.com/package/express-session#resave
+    })
+);
 app.use(express.static(path.join(__dirname, "./client/src")));
 app.use(express.json());
 
@@ -37,12 +47,19 @@ app.use(express.json());
 app.use("/api/book", booksController);
 app.use("/api/user", userController);
 app.use("/api/onLoan", onLoanController);
+app.use("/api/session", sessionController)
 
 
 //* Routes
 app.get("/", (req, res) => {
     res.send("aLibrary express working")
 });
+
+// GET INDEX
+// app.get('/', (req, res) => {
+//     console.log('current user', req.session.currentUser)
+//     // res.render('index.ejs', { currentUser: req.session.currentUser });
+// });
 
 
 //* Start server to listen
