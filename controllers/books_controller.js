@@ -2,8 +2,9 @@ const { on } = require("events");
 const express = require("express");
 const router = express.Router();
 const Books = require("../models/books.js");
-const seedBooks = require("../models/seed_books.js");
 const onLoan = require("../models/onLoan.js");
+const seedBooks = require("../models/seed_books.js");
+const genre = require("../models/genre");
 
 //* 5 + 2  REST routes => CREATE, ALL, READ, UPDATE, DELETE (NEW Form, Edit Form)
 
@@ -71,6 +72,11 @@ router.get("/seed", async (req, res) => {
   } catch (err) {
     res.send(err.message);
   }
+});
+
+//* ROUTER => GET GENRE
+router.get("/genre", (req, res) => {
+  res.json(genre);
 });
 
 //* ROUTER => SEPCIFIC ID ROUTE
