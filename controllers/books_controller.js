@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const Books = require("../models/books.js");
 const seedBooks = require("../models/seed_books.js");
-const onLoan = require("../models/onLoan.js")
+const onLoan = require("../models/onLoan.js");
 
 //* 5 + 2  REST routes => CREATE, ALL, READ, UPDATE, DELETE (NEW Form, Edit Form)
 
@@ -19,34 +19,34 @@ router.post("/", (req, res) => {
 
 //* ROUTER => INDEX READ ROUTE
 router.get("/testing", async (req, res) => {
-    // const getQtyLeft = (book) => {
-    //     const totalQty = book.qty
-    //     const onLoanQty = OnLoans.find({bookID: book._id}).length
-    //     return (totalQty-onLoanQty)
-    // }
-        Books.find({}, async (err, foundBooks) => {
-            if (err) {
-                res.status(400).json({ error: err.message });
-            }
-            for (const b of foundBooks) {
-                const chicken = await onLoan.find({bookID:b._doc._id}).length
-                console.log( chicken )
-                if (chicken > 0) {
-                    // b._doc.available = "available"
-                    console.log("hey!")
-                } 
-                // else {
-            //         if (getQtyLeft(b) > 0) {
-            //             b._doc.availability="available"
-            //          } 
-            //         else {
-            //             b._doc.availability="unavailable"
-            //          }  
-            //     }
-            }
-            res.status(200).json(foundBooks);
-        });
-    })
+  // const getQtyLeft = (book) => {
+  //     const totalQty = book.qty
+  //     const onLoanQty = OnLoans.find({bookID: book._id}).length
+  //     return (totalQty-onLoanQty)
+  // }
+  Books.find({}, async (err, foundBooks) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    }
+    for (const b of foundBooks) {
+      const chicken = await onLoan.find({ bookID: b._doc._id }).length;
+      console.log(chicken);
+      if (chicken > 0) {
+        // b._doc.available = "available"
+        console.log("hey!");
+      }
+      // else {
+      //         if (getQtyLeft(b) > 0) {
+      //             b._doc.availability="available"
+      //          }
+      //         else {
+      //             b._doc.availability="unavailable"
+      //          }
+      //     }
+    }
+    res.status(200).json(foundBooks);
+  });
+});
 
 router.get("/", (req, res) => {
   try {
@@ -56,6 +56,18 @@ router.get("/", (req, res) => {
       }
       res.status(200).json(foundBooks);
     });
+  } catch (err) {
+    res.send(err.message);
+  }
+});
+
+//* ROUTER => SEED ROUTE
+router.get("/seed", async (req, res) => {
+  try {
+    await Books.deleteMany({});
+    await Books.create(seedBooks);
+    console.log(`Book seeds: ${seedBooks}`);
+    res.send(seedBooks);
   } catch (err) {
     res.send(err.message);
   }
@@ -99,18 +111,6 @@ router.put("/:id", (req, res) => {
       res.status(200).json(updatedBooks);
     }
   );
-});
-
-//* ROUTER => SEED ROUTE
-router.get("/seed", async (req, res) => {
-  try {
-    await Books.deleteMany({});
-    const seed = await Books.create(seedBooks);
-    console.log(`Book seeds: ${seed}`);
-    res.send(seed);
-  } catch (err) {
-    res.send(err.message);
-  }
 });
 
 module.exports = router;

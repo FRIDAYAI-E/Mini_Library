@@ -29,17 +29,17 @@ function App() {
           <Route path="/admin/dashboard">
             <AdminDashboard />
           </Route>
-          <Route exact path="/admin/managebooks/new">
-            <BookUpdateCreate />
-          </Route>
-          <Route path="/admin/managebooks/:id/edit">
-            <BookUpdateCreate />
-          </Route>
           <Route path="/admin/managebooks">
             <ManageBooks />
           </Route>
           <Route path="/admin/managereturns">
             <ManageReturns />
+          </Route>
+          <Route path="/admin/addcollection">
+            <BookUpdateCreate />
+          </Route>
+          <Route path="/admin/managebooks/:id/edit">
+            <BookUpdateCreate />
           </Route>
           {
             //!?     ====================    User routes  =========================

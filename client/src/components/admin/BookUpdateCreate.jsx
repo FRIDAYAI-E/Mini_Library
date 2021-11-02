@@ -1,15 +1,15 @@
-import { Button, Select, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Navbar from "../Navbar";
 
 const BookUpdateCreate = () => {
-  const [genre, setGenre] = useState(["Fiction", "Non fiction"]);
-  useEffect(() => {
-    setGenre(["Fiction", "Non fiction"]);
-  }, []);
+  // const [genre, setGenre] = useState(["Fiction", "Non fiction"]);
+  // useEffect(() => {
+  //   setGenre(["Fiction", "Non fiction"]);
+  // }, []);
 
-  const handleSelection = () => {};
+  // const handleSelection = () => {};
 
   return (
     <div>
@@ -22,9 +22,9 @@ const BookUpdateCreate = () => {
       </Box>
       <Box component="form">
         <TextField required label="Title"></TextField>
-        <Select label="Genre" value={genre} onChange={handleSelection}>
+        {/* <Select label="Genre" value={genre} onChange={handleSelection}>
           map menuitem(genre)
-        </Select>
+        </Select> */}
         <TextField required label="Quantity"></TextField>
         <TextField label="ImageUrl"></TextField>
         <TextField label="Author"></TextField>
