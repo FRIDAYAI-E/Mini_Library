@@ -15,8 +15,7 @@ const sessionController = require("./controllers/session_controller");
 const project_3 = "alibrary";
 const app = express();
 const PORT = process.env.PORT ?? 3001;
-const MONGODB_URI = `mongodb://localhost:27017/alibrary`;
-// process.env.MONGODB_URI ?? `mongodb://localhost:27017/alibrary`;
+const MONGODB_URI = process.env.MONGODB_URI ?? `mongodb://localhost:27017/alibrary`;
 
 // to be switch to atlas
 
@@ -40,7 +39,7 @@ app.use(
     saveUninitialized: false, // default  more info: https://www.npmjs.com/package/express-session#resave
   })
 );
-app.use(express.static(path.join(__dirname, "./client/src")));
+app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.json());
 
 //* Controllers/Routes
