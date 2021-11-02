@@ -21,10 +21,8 @@ router.post("/", async (req, res) => {
     }
     const results = await bcrypt.compare(password, user.password);
     if (results) {
-        console.log("session", req.session);
         req.session.loginUser = user;
         req.session.admin = user.role
-        console.log("new session", req.session)
         res.status(200).json(req.session);
     } else {
         res.status(404).json({ message: "Password incorrect" })

@@ -9,9 +9,6 @@ import { useAtom } from 'jotai'
 import { useHistory } from "react-router-dom";
 
 
-
-
-console.log()
 function userDashboard() {
   const [status, setStatus] = useState("pending");
   const [loanData, setLoanData] = useState();
@@ -60,7 +57,6 @@ function userDashboard() {
         ) : (
           <h1>Loading</h1>
         )}
-        {/* <UserDueTable /> */}
         <UserFines />
       </div>
     </>
