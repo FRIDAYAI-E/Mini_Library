@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const Books = require("../models/books.js");
 const seedBooks = require("../models/seed_books.js");
-const onLoan = require("../models/onLoan.js")
+// const onLoan = require("../models/onLoan.js")
 
 //* 5 + 2  REST routes => CREATE, ALL, READ, UPDATE, DELETE (NEW Form, Edit Form)
 
@@ -26,6 +26,7 @@ router.post("/", isAuthenticated, (req, res) => {
         res.status(200).json(createdBook);
     });
 });
+
 
 //* ROUTER => INDEX READ ROUTE
 // router.get("/testing", async (req, res) => {
@@ -123,6 +124,8 @@ router.put("/:id", isAuthenticated, (req, res) => {
         }
     );
 });
+
+
 
 
 
