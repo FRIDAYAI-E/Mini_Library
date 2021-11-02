@@ -6,13 +6,12 @@ import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { arrAtom } from "./BrowseBooks"
+import { useAtom } from 'jotai'
 import { useHistory } from "react-router-dom";
 
 
 function BookDetails() {
-  const url =
-    "https://images.pexels.com/photos/1290141/pexels-photo-1290141.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
-
   const Img = styled("img")({
     margin: "auto",
     display: "block",
@@ -34,29 +33,20 @@ function BookDetails() {
       },
   });
 
-  const bookDetails = {
-      id: "_id",
-      title: "The Adventures of Chicken",
-      qty: 3,
-      genre: "fiction",
-      author: "Mr Chicken",
-      img: url,
-      description: "It is a very good book",
-      session: "testing" //! FAKE SESSION ID
-  }
+
+  const data = useAtom(arrAtom)[0]
+  console.log("atom", data)
 
   let history = useHistory()
-
+  
   const handleBooking = async(bookID, sessionID) => {
-      console.log(bookID)
-      const data = {bookID: bookID, userID:sessionID}
+    const newDate = new Date()
+    const data = {bookID: bookID, userID: sessionID, dateBorrowed: newDate}
       await axios.post(`/api/onLoan/`, data)
       .then(res=>{
-        console.log(res);
         console.log(res.data)
-        console.log("here!")
     })
-    // history.push("/chicken/home");
+    history.push("/books/success");
 }
 
   return (
@@ -70,10 +60,10 @@ function BookDetails() {
           maxheight: 400,
         }}
       >
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           <Grid item>
             <ButtonBase sx={{ width: 200, height: 200 }}>
-              <Img alt="complex" src={bookDetails.img} />
+              <Img alt="complex" src={data.bookImg} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
@@ -84,19 +74,19 @@ function BookDetails() {
                   variant="h5"
                   component="div"
                   sx={{ textAlign: "left" }}>
-                  {bookDetails.title}
+                  {data.title}
                 </Typography>
                 <Typography
                   variant="body2"
                   gutterBottom
                   sx={{ textAlign: "left" }}
                 >
-                  Description: 
+                  Genre: {data.genre}
                 </Typography>
                 <Typography 
                   variant="subtitle2"
-                  sx={{ textAlign: "left" }}>
-                      {bookDetails.description} 
+                  sx={{ textAlign: "left", paddingTop: 4, paddingBottom: 10}}>
+                      {data.description} 
                 </Typography>
               </Grid>
             </Grid>
@@ -108,7 +98,7 @@ function BookDetails() {
           </Grid>
         </Grid>
         <Grid>
-          <BookingButton variant="contained" onClick={()=> handleBooking(bookDetails.id, bookDetails.session)}> 
+          <BookingButton variant="contained" onClick={()=> handleBooking(data._id, data._id)}> 
               Book! 
           </BookingButton>
         </Grid>

@@ -6,7 +6,15 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import ManageBooks from "./components/admin/ManageBooks";
 import BookUpdateCreate from "./components/admin/BookUpdateCreate";
 import ManageReturns from "./components/admin/ManageReturns";
+<<<<<<< HEAD
+import UserDashboard from "./components/users/UserDashboard"
+import BrowseBooks from "./components/users/BrowseBooks"
+import BookDetails from "./components/users/BookDetails"
+import SuccessBooking from "./components/users/SuccessBooking"
+import NewUser from "./components/users/NewUser"
+=======
 import BrowseBooks from "./components/users/BrowseBooks";
+>>>>>>> develop
 
 function App() {
   return (
@@ -16,9 +24,15 @@ function App() {
           {/* <Route exact path="/">
           <Login />
         </Route> */}
+<<<<<<< HEAD
+        {
+          //!      ====================    Admin routes  =========================
+        }
+=======
           <Route path="/user/browse">
             <BrowseBooks />
           </Route>
+>>>>>>> develop
           <Route path="/admin/dashboard">
             <AdminDashboard />
           </Route>
@@ -33,6 +47,24 @@ function App() {
           </Route>
           <Route path="/admin/managereturns">
             <ManageReturns />
+          </Route>
+          {
+          //!?     ====================    User routes  =========================
+        }
+          <Route path="/user/new">
+          <NewUser/>
+          </Route>
+          <Route path="/user/dashboard">
+          <UserDashboard/>
+          </Route>
+          <Route path="/browseBooks/:id">
+          <BookDetails/>
+          </Route>
+          <Route path="/browseBooks">
+          <BrowseBooks/>
+          </Route>
+          <Route path="/books/success">
+          <SuccessBooking />
           </Route>
         </Switch>
       </div>

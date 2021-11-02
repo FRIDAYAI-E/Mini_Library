@@ -14,6 +14,12 @@ import Remove from "@material-ui/icons/Remove";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import Info from "@material-ui/icons/Info";
+import {useEffect, useState} from "react"
+import axios from "axios"
+import { useHistory } from "react-router-dom";
+import { atom, useAtom } from "jotai"
+
+export const arrAtom = atom([])
 
 function BrowseBooks() {
   const tableIcons = {
@@ -34,27 +40,54 @@ function BrowseBooks() {
     ThirdStateCheck: Remove,
     ViewColumn: ViewColumn,
   };
+  const [status, setStatus] = useState("pending");
+  const [bookData, setBookData] = useState();
+  const [bookSelection, setBookSelection] = useAtom(arrAtom)
+  
+  useEffect( () => {
+    const getData = async() => {
+      try{
+        const response = await axios.get(`/api/book`)
+        setStatus("loading")
+        setBookData(response.data)
+        setStatus("resolved")
+        console.log("network status:", status, bookData)
+      } catch (error) {
+        console.log("error", error)
+      }
+    };
+    getData()    
+  }, []);
 
-    const BookData = [{
-      title: " adventure chicken",
-      genre: "fiction",
-      rating: 4,
-      author: "mr chicken",
-      availability: "yes"
-    },
-    {
-      title: " adventure duck",
-      genre: "fiction",
-      rating: 1,
-      author: "mr duck",
-      availability: "no"
-    },{
-      title: " adventure potato",
-      genre: "fiction",
-      rating: 2,
-      author: "mr potato",
-      availability: "yes"
-    },]
+
+  let history = useHistory()
+
+  const handleRowClick = (event, rowData) => {
+      history.push(`/browseBooks/${rowData._id}`);
+      console.log("bookSelection", bookSelection)
+      setBookSelection(rowData)
+  };
+
+    // const BookData = [{
+    //   title: " adventure chicken",
+    //   genre: "fiction",
+    //   rating: 4,
+    //   author: "mr chicken",
+    //   availability: "yes"
+    // },
+    // {
+    //   title: " adventure duck",
+    //   genre: "fiction",
+    //   rating: 1,
+    //   author: "mr duck",
+    //   availability: "no"
+    // },{
+    //   title: " adventure potato",
+    //   genre: "fiction",
+    //   rating: 2,
+    //   author: "mr potato",
+    //   availability: "yes"
+    // },]
 
   return (
     <>
@@ -62,12 +95,13 @@ function BrowseBooks() {
         <MaterialTable
           style={{ boxShadow: "none", marginBottom: "3%" }}
           icons={tableIcons}
+          onRowClick={handleRowClick}
           columns={[
             {
               title: "Title",
               field: "title",
-              align: "justify",
-              defaultSort: "desc",
+              align: "left",
+              defaultSort: "asc",
             },
             {
               title: "Genre",
@@ -86,20 +120,18 @@ function BrowseBooks() {
             },
           ]}
           title="Browse Books"
-          data = {BookData}
+          data = {bookData}
           options={{
-            filtering: true,
-            pageSize: 5,
+            pageSize: 10,
             pageSizeOptions: [5, 10, 50],
-            thirdSortClick: false,
             draggable: false,
-            maxBodyHeight: "70vh",
+            maxBodyHeight: "100vh",
             tableLayout: "auto",
             showFirstLastPageButtons: false,
             headerStyle: {
               position: "sticky",
               height: 0,
-              background: "white",
+              background: "#DCDCDC",
             },
           }}
         />
