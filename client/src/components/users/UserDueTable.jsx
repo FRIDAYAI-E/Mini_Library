@@ -41,7 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ];
 
  const UserDueTable = ({loanData}) => {
-  console.log("props", loanData[0].bookID)
+  // console.log("props", loanData[0].bookID)
   // const loanData = props.loanData
   return (
     <TableContainer component={Paper}>

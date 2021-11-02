@@ -1,11 +1,22 @@
-const { on } = require("events");
 const express = require("express");
 const router = express.Router();
 const Books = require("../models/books.js");
 const seedBooks = require("../models/seed_books.js");
-const onLoan = require("../models/onLoan.js")
+const onLoans = require("../models/onLoan.js");
 
 //* 5 + 2  REST routes => CREATE, ALL, READ, UPDATE, DELETE (NEW Form, Edit Form)
+
+//* ROUTER => SEED ROUTE
+router.get("/seed", async (req, res) => {
+  try {
+    await Books.deleteMany({});
+    const seed = await Books.create(seedBooks);
+    console.log(`Book seeds: ${seed}`);
+    res.send(seed);
+  } catch (err) {
+    res.send(err.message);
+  }
+});
 
 //* ROUTER => CREATE ROUTE
 router.post("/", (req, res) => {
@@ -19,34 +30,33 @@ router.post("/", (req, res) => {
 
 //* ROUTER => INDEX READ ROUTE
 router.get("/testing", async (req, res) => {
-    // const getQtyLeft = (book) => {
-    //     const totalQty = book.qty
-    //     const onLoanQty = OnLoans.find({bookID: book._id}).length
-    //     return (totalQty-onLoanQty)
-    // }
-        Books.find({}, async (err, foundBooks) => {
-            if (err) {
-                res.status(400).json({ error: err.message });
-            }
-            for (const b of foundBooks) {
-                const chicken = await onLoan.find({bookID:b._doc._id}).length
-                console.log( chicken )
-                if (chicken > 0) {
-                    // b._doc.available = "available"
-                    console.log("hey!")
-                } 
-                // else {
-            //         if (getQtyLeft(b) > 0) {
-            //             b._doc.availability="available"
-            //          } 
-            //         else {
-            //             b._doc.availability="unavailable"
-            //          }  
-            //     }
-            }
-            res.status(200).json(foundBooks);
-        });
-    })
+  const AVAILABLE = "available"
+  const UNAVAILABLE = "unavailable"
+  const bookID = "617fadcaf44f0e56fe2736c6"
+  const data = [];
+  const booksOnLoan = await onLoans.find({})
+  const allBooks = await Books.find({})
+  console.log("hi")
+
+  // for (const loanEntries of booksOnLoan){
+  //   await Books.find({_id: loanEntries.bookID}).exec(function (err, matchedBooks) {
+  //     if (matchedBooks) {
+  //       matchedBooks.availability = UNAVAILABLE
+  //       console.log("matchedBooks", matchedBooks)
+  //       data.push(matchedBooks)
+  //     }
+  //   })
+  // }
+
+  // Books.find( {$lookup: {from: onLoans, localField: bookID, foreignField: Books._id, as: AVAILABLE 
+  //   // $cond:{ if:null, then {availability: AVAILABLE}, else {availability: UNAVAILABLE}
+  // }}  
+  // )
+
+  res.json(data)
+
+});
+
 
 router.get("/", (req, res) => {
   try {
@@ -101,16 +111,6 @@ router.put("/:id", (req, res) => {
   );
 });
 
-//* ROUTER => SEED ROUTE
-router.get("/seed", async (req, res) => {
-  try {
-    await Books.deleteMany({});
-    const seed = await Books.create(seedBooks);
-    console.log(`Book seeds: ${seed}`);
-    res.send(seed);
-  } catch (err) {
-    res.send(err.message);
-  }
-});
+
 
 module.exports = router;

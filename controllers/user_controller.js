@@ -6,10 +6,23 @@ const seedUsers = require("../models/seed_users.js");
 
 //* 5 + 2  REST routes => CREATE, ALL, READ1, UPDATE, DELETE (NEW Form, Edit Form)
 
+//* ROUTER => SEEDING ROUTE
+router.get('/seed', async (req, res) => {
+    try {
+        await Users.deleteMany({});
+        const seed = await Users.create(seedUsers)
+        res.send(seed);
+    } catch (err) {
+        res.send(err.message);
+    }
+
+})
+
 
 //* ROUTER => CREATE ROUTE
 router.post("/", (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    console.log("req.body",req.body)
     Users.create(req.body, (err, createdBook) => {
         if (err) {
             res.status(400).json({ error: err.message });
@@ -75,17 +88,7 @@ router.put("/:id", (req, res) => {
     );
 });
 
-//* ROUTER => SEEDING ROUTE
-router.get('/seed', async (req, res) => {
-    try {
-        await Users.deleteMany({});
-        const seed = await Users.create(seedUsers)
-        res.send(seed);
-    } catch (err) {
-        res.send(err.message);
-    }
 
-})
 
 
 module.exports = router;
