@@ -28,9 +28,7 @@ function App() {
           {
             //!      ====================    Admin routes  =========================
           }
-          <Route path="/user/browse">
-            <BrowseBooks />
-          </Route>
+          
           <Route path="/admin/dashboard">
             <AdminDashboard />
           </Route>

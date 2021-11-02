@@ -4,7 +4,7 @@ import UserDueTable from "./UserDueTable";
 import UserFines from "./UserFines";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {sessionAtom} from "../LoginPage"
+import { sessionAtom } from "../LoginPage"
 import { useAtom } from 'jotai'
 import { useHistory } from "react-router-dom";
 
@@ -17,6 +17,7 @@ function userDashboard() {
   const [loanData, setLoanData] = useState();
   
     const data = useAtom(sessionAtom)[0]
+    const userID = data?.loginUser?._id
     console.log("atom", data)
     let history = useHistory()
 
@@ -25,13 +26,12 @@ function userDashboard() {
         history.push("/login");
       }
     }
-  
     isAuthenticated()
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(`/api/onloan`);
+        const response = await axios.get(`/api/onloan/${userID}`);
         setStatus("loading");
         console.log("response", response.data);
         setLoanData(response.data);
@@ -47,6 +47,11 @@ function userDashboard() {
   return (
     <>
       <div>
+        {data.loginUser === undefined ?
+          (null ): (<h1>Welcome: {data?.loginUser?.name} </h1>)
+        }
+
+        
         <NavLink to={"/browsebooks"}>
           <button>Browse Books!</button>
         </NavLink>
