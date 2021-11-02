@@ -42,6 +42,18 @@ router.get("/", (req, res) => {
 
 });
 
+//* ROUTER => SEEDING ROUTE
+router.get('/seed', async (req, res) => {
+    try {
+        await Users.deleteMany({});
+        const seed = await Users.create(seedUsers)
+        res.send(seed);
+    } catch (err) {
+        res.send(err.message);
+    }
+
+})
+
 //* ROUTER => INDEX READ ROUTE
 router.get("/:id", (req, res) => {
     const { id } = req.params.id;
@@ -83,17 +95,6 @@ router.put("/:id", isAuthenticated, (req, res) => {
     );
 });
 
-//* ROUTER => SEEDING ROUTE
-router.get('/seed', async (req, res) => {
-    try {
-        await Users.deleteMany({});
-        const seed = await Users.create(seedUsers)
-        res.send(seed);
-    } catch (err) {
-        res.send(err.message);
-    }
-
-})
 
 
 module.exports = router;
