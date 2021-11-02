@@ -35,6 +35,9 @@ function App() {
           <Route path="/admin/dashboard">
             <AdminDashboard />
           </Route>
+          <Route path="/admin/managebooks/:id/edit">
+            <BookUpdateCreate />
+          </Route>
           <Route path="/admin/managebooks">
             <ManageBooks />
           </Route>
@@ -42,9 +45,6 @@ function App() {
             <ManageReturns />
           </Route>
           <Route path="/admin/addcollection">
-            <BookUpdateCreate />
-          </Route>
-          <Route path="/admin/managebooks/:id/edit">
             <BookUpdateCreate />
           </Route>
           {
