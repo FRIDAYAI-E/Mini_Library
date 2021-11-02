@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { arrAtom } from "./BrowseBooks"
-import { useAtom } from 'jotai'
+import { arrAtom } from "./BrowseBooks";
+import { useAtom } from "jotai";
 import { useHistory } from "react-router-dom";
-import { sessionAtom } from "../LoginPage"
-import moment from 'moment';
+import { sessionAtom } from "../LoginPage";
+import moment from "moment";
 
 function BookDetails() {
   const Img = styled("img")({
@@ -23,43 +23,46 @@ function BookDetails() {
   const BookingButton = styled(Button)({
     display: "flex",
     marginTop: 20,
-    padding:0,
+    padding: 0,
     textTransform: "none",
     backgroundColor: "#ABB2B9",
     borderColor: "#ABB2B9",
-    '&:hover': {
-        backgroundColor: '#ABB2B9',
-        borderColor: '#ABB2B9',
-        boxShadow: 'none',
-      },
+    "&:hover": {
+      backgroundColor: "#ABB2B9",
+      borderColor: "#ABB2B9",
+      boxShadow: "none",
+    },
   });
 
-
-  const data = useAtom(sessionAtom)[0]
-  const bookData = useAtom(arrAtom)[0]
-  let history = useHistory()
+  const data = useAtom(sessionAtom)[0];
+  const bookData = useAtom(arrAtom)[0];
+  let history = useHistory();
 
   const isAuthenticated = () => {
-    if(data.loginUser === undefined) {
+    if (data.loginUser === undefined) {
       history.push("/login");
     }
-  }
-  isAuthenticated()
+  };
+  isAuthenticated();
 
-  const handleBooking = async(bookID, sessionID) => {
-    console.log("bookID", bookID)
-    console.log("sessionID", sessionID)
+  const handleBooking = async (bookID, sessionID) => {
+    console.log("bookID", bookID);
+    console.log("sessionID", sessionID);
 
-    const newDate = moment ()
-    const returnDate = moment().add(10,"d").toDate()
-    console.log("returnDate", returnDate)
-    const data = {bookID: bookID, userID: sessionID, dateBorrowed: newDate, dateReturned: returnDate}
-      await axios.post(`/api/onLoan/`, data)
-      .then(res=>{
-        console.log(res.data)
-    })
+    const newDate = moment();
+    const returnDate = moment().add(10, "d").toDate();
+    console.log("returnDate", returnDate);
+    const data = {
+      bookID: bookID,
+      userID: sessionID,
+      dateBorrowed: newDate,
+      dateReturned: returnDate,
+    };
+    await axios.post(`/api/onLoan/`, data).then((res) => {
+      console.log(res.data);
+    });
     history.push("/books/success");
-}
+  };
   return (
     <div>
       <Paper
@@ -84,7 +87,8 @@ function BookDetails() {
                   gutterBottom
                   variant="h5"
                   component="div"
-                  sx={{ textAlign: "left" }}>
+                  sx={{ textAlign: "left" }}
+                >
                   {bookData.title}
                 </Typography>
                 <Typography
@@ -94,10 +98,11 @@ function BookDetails() {
                 >
                   Genre: {bookData.genre}
                 </Typography>
-                <Typography 
+                <Typography
                   variant="subtitle2"
-                  sx={{ textAlign: "left", paddingTop: 4, paddingBottom: 10}}>
-                      {bookData.description} 
+                  sx={{ textAlign: "left", paddingTop: 4, paddingBottom: 10 }}
+                >
+                  {bookData.description}
                 </Typography>
               </Grid>
             </Grid>
@@ -109,8 +114,11 @@ function BookDetails() {
           </Grid>
         </Grid>
         <Grid>
-          <BookingButton variant="contained" onClick={()=> handleBooking(bookData._id, data.loginUser._id)}> 
-              Book! 
+          <BookingButton
+            variant="contained"
+            onClick={() => handleBooking(bookData._id, data.loginUser._id)}
+          >
+            Book!
           </BookingButton>
         </Grid>
       </Paper>
