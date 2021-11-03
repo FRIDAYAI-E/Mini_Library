@@ -32,7 +32,6 @@ const ManageBooks = () => {
     const getBooks = async () => {
       const res = await axios.get("/api/book");
       setBooks(res.data);
-      console.log(res);
     };
     getBooks();
   }, []);

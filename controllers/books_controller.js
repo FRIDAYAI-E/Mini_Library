@@ -68,17 +68,15 @@ router.get("/genre", (req, res) => {
 
 // //* ROUTER => SEPCIFIC ID ROUTE
 router.get("/:id", (req, res) => {
-  const { id } = req.params.id;
-  try {
-    Books.find({}, (err, foundBooks) => {
-      if (err) {
-        res.status(400).json({ error: err.message });
-      }
+  const { id } = req.params;
+  console.log("book edit route hit: " + id);
+  Books.findById({ id }, (err, foundBooks) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else {
       res.status(200).json(foundBooks);
-    });
-  } catch (err) {
-    res.send(err.message);
-  }
+    }
+  });
 });
 
 //* ROUTER => DELETE ROUTE

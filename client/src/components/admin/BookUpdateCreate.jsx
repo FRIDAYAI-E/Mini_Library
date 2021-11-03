@@ -4,15 +4,18 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar";
 import { useHistory } from "react-router";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
-import { useAtom } from "jotai";
-import { rowAtom } from "./ManageBooks";
+import { NavLink, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+// import { useAtom } from "jotai";
+// import { rowAtom } from "./ManageBooks";
 
-const BookUpdateCreate = () => {
+const BookUpdateCreate = (props) => {
+  const { action } = props;
   let history = useHistory();
-  const [row] = useAtom(rowAtom);
+  // const [row] = useAtom(rowAtom);
   const [genre, setGenre] = useState([]);
-  // const [submission, setSubmission] = useState({});
+  const [submission, setSubmission] = useState({});
+  // const [entry, setEntry] = useState({});
 
   useEffect(async () => {
     const res = await axios.get("/api/book/genre");
@@ -20,11 +23,21 @@ const BookUpdateCreate = () => {
     setGenre(res.data);
   }, []);
 
-  // const handleChange = (e, field) => {
-  //   e.preventDefault();
-  //   setSubmission({ ...submission, [field]: e.target.value });
-  //   console.log(e.target.value);
-  // };
+  const { id } = useParams();
+
+  useEffect(async () => {
+    if (action === "UPDATE") {
+      const res = await axios.get(`/api/book/${id}`);
+      setSubmission(res.data);
+    }
+  }, [id]);
+
+  const handleChange = (e, field) => {
+    e.preventDefault();
+    setSubmission({ ...submission, [field]: e.target.value });
+    console.log(e.target.value);
+  };
+
   const createCollection = (collectionObj) => {
     axios
       .post("/api/book", collectionObj)
@@ -33,15 +46,15 @@ const BookUpdateCreate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const result = {};
-    result.title = e.target.title.value;
-    result.genre = e.target.genre.value;
-    result.qty = e.target.qty.value;
-    result.bookImg = e.target.bookImg.value;
-    result.author = e.target.author.value;
-    result.description = e.target.description.value;
-    console.log("create collection", result);
-    createCollection(result);
+    // const result = {};
+    // result.title = e.target.title.value;
+    // result.genre = e.target.genre.value;
+    // result.qty = e.target.qty.value;
+    // result.bookImg = e.target.bookImg.value;
+    // result.author = e.target.author.value;
+    // result.description = e.target.description.value;
+    // console.log("create collection", result);
+    createCollection(submission);
     history.push("/admin/managebooks");
   };
 
@@ -49,7 +62,7 @@ const BookUpdateCreate = () => {
     <div>
       <Navbar />
       <Box>
-        {row === null ? (
+        {action === "CREATE" ? (
           ""
         ) : (
           <Button variant="contained" color="error">
@@ -64,9 +77,19 @@ const BookUpdateCreate = () => {
             type="text"
             name="title"
             placeholder="title"
-            value={row ? row.title : ""}
+            onChange={(e) => {
+              handleChange(e, "title");
+            }}
+            value={action === "UPDATE" ? submission.title : ""}
           />
-          <select name="genre" id="genre" value={row ? row.genre : ""}>
+          <select
+            name="genre"
+            id="genre"
+            onChange={(e) => {
+              handleChange(e, "genre");
+            }}
+            value={action === "UPDATE" ? submission.genre : ""}
+          >
             {genre.map((g) => (
               <option key={g} value={g}>
                 {g}
@@ -78,25 +101,37 @@ const BookUpdateCreate = () => {
             name="qty"
             id="input-qty"
             placeholder="Quantity"
-            value={row ? row.qty : ""}
+            onChange={(e) => {
+              handleChange(e, "qty");
+            }}
+            value={action === "UPDATE" ? submission.qty : ""}
           />
           <input
             type="text"
             name="bookImg"
             placeholder="Image Url"
-            value={row ? row.bookImg : ""}
+            onChange={(e) => {
+              handleChange(e, "bookImg");
+            }}
+            value={action === "UPDATE" ? submission.bookImg : ""}
           />
           <input
             type="text"
             name="author"
             placeholder="Author"
-            value={row ? row.author : ""}
+            onChange={(e) => {
+              handleChange(e, "author");
+            }}
+            value={action === "UPDATE" ? submission.author : ""}
           />
           <input
             type="text"
             name="description"
             placeholder="Description"
-            value={row ? row.description : ""}
+            onChange={(e) => {
+              handleChange(e, "description");
+            }}
+            value={action === "UPDATE" ? submission.description : ""}
           />
           <input type="submit" value="Confirm" />
         </form>
@@ -109,3 +144,7 @@ const BookUpdateCreate = () => {
 };
 
 export default BookUpdateCreate;
+
+BookUpdateCreate.propTypes = {
+  action: PropTypes.string,
+};
