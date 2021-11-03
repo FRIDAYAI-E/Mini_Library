@@ -50,8 +50,8 @@ app.use("/api/onLoan", onLoanController);
 app.use("/api/session", sessionController);
 
 //* Routes
-app.get("/", (req, res) => {
-  res.send("aLibrary express working");
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/src", "index.html"));
 });
 
 //* Start server to listen
