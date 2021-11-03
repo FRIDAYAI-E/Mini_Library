@@ -101,7 +101,7 @@ export default function TemporaryDrawer() {
       {data.loginUser === undefined ? (
         <div />
       ) : (
-        <AppBar position="static"  style={{ background: '#bcbcbc' }}>
+        <AppBar position="static"  style={{ background: '#999999' }}>
           <Toolbar>
             <Sidebar menuItem={activeRole(data.role)} />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

@@ -122,12 +122,13 @@ function BrowseBooks() {
               tableLayout: "auto",
               showFirstLastPageButtons: false,
               rowStyle: {
-                fontSize: 15,
+                fontSize: 12,
               },
               headerStyle: {
                 position: "sticky",
                 height: 0,
                 background: "#DCDCDC",
+                fontWeight: "bold",
               },
             }}
           />
