@@ -15,7 +15,8 @@ const sessionController = require("./controllers/session_controller");
 const project_3 = "alibrary";
 const app = express();
 const PORT = process.env.PORT ?? 3001;
-const MONGODB_URI = process.env.MONGODB_URI ?? `mongodb://localhost:27017/alibrary`;
+const MONGODB_URI =
+  process.env.MONGODB_URI ?? `mongodb://localhost:27017/alibrary`;
 
 // to be switch to atlas
 
@@ -28,13 +29,16 @@ mongoose.connection.on("disconnected", () => console.log("mongo disconnected"));
 //* Database connection
 mongoose.connect(MONGODB_URI);
 mongoose.connection.once("open", () => {
-  console.log("connected to mongoose..." + MONGODB_URI);
+  console.log(
+    "connected to mongoose..." +
+      (MONGODB_URI.includes("localhost") ? "Local server" : "Atlas server")
+  );
 });
 
 //* Middleware
 app.use(
   session({
-    secret: "hello", //a random string do not copy this value or your stuff will get hacked
+    secret: process.env.SECRET, //a random string do not copy this value or your stuff will get hacked
     resave: false, // default more info: https://www.npmjs.com/package/express-session#resave
     saveUninitialized: false, // default  more info: https://www.npmjs.com/package/express-session#resave
   })
@@ -51,8 +55,9 @@ app.use("/api/session", sessionController);
 
 //* Routes
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "./client/src", "index.html"));
 });
+//! CHANGE BACK TO ".client/build" DURING DEPLOYMENT
 
 //* Start server to listen
 app.listen(PORT, () => {
