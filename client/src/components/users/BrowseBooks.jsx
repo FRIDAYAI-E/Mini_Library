@@ -19,6 +19,8 @@ import axios from "axios"
 import { useHistory } from "react-router-dom";
 import { atom, useAtom } from "jotai"
 import { sessionAtom } from "../LoginPage"
+import Navbar from "../Navbar";
+
 
 
 export const arrAtom = atom([])
@@ -46,9 +48,10 @@ function BrowseBooks() {
   const [bookData, setBookData] = useState();
   const [bookSelection, setBookSelection] = useAtom(arrAtom)
   
+  if (bookSelection) {null} // empty code to prevent errors
 
   const data = useAtom(sessionAtom)[0]
-  console.log("atom", data)
+  // console.log("atom", data)
   let history = useHistory()
 
   const isAuthenticated = () => {
@@ -66,7 +69,6 @@ function BrowseBooks() {
         setStatus("loading")
         setBookData(response.data)
         setStatus("resolved")
-        console.log("network status:", status, bookData)
       } catch (error) {
         console.log("error", error)
       }
@@ -76,34 +78,14 @@ function BrowseBooks() {
 
   const handleRowClick = (event, rowData) => {
       history.push(`/browseBooks/${rowData._id}`);
-      console.log("bookSelection", bookSelection)
+      // console.log("bookSelection", bookSelection)
       setBookSelection(rowData)
   };
 
-    // const BookData = [{
-    //   title: " adventure chicken",
-    //   genre: "fiction",
-    //   rating: 4,
-    //   author: "mr chicken",
-    //   availability: "yes"
-    // },
-    // {
-    //   title: " adventure duck",
-    //   genre: "fiction",
-    //   rating: 1,
-    //   author: "mr duck",
-    //   availability: "no"
-    // },{
-    //   title: " adventure potato",
-    //   genre: "fiction",
-    //   rating: 2,
-    //   author: "mr potato",
-    //   availability: "yes"
-    // },]
-
   return (
     <>
-      <div>
+    <Navbar />
+    {status === "resolved" ? (<div>
         <MaterialTable
           style={{ boxShadow: "none", marginBottom: "3%" }}
           icons={tableIcons}
@@ -147,7 +129,8 @@ function BrowseBooks() {
             },
           }}
         />
-      </div>
+      </div>) : null }
+      
     </>
   );
 }

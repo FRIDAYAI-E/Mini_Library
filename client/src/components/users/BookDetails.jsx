@@ -10,8 +10,8 @@ import { arrAtom } from "./BrowseBooks";
 import { useAtom } from "jotai";
 import { useHistory } from "react-router-dom";
 import { sessionAtom } from "../LoginPage";
-// import moment from "moment";
 import { add } from 'date-fns'
+import Navbar from "../Navbar";
 
 function BookDetails() {
   const Img = styled("img")({
@@ -47,23 +47,9 @@ function BookDetails() {
   isAuthenticated();
 
 
-  // const a = moment([2007, 0, 29]);
-  // const b = moment([2007, 0, 28]);
-  // console.log("diff", a.diff(b)) // 86400000
-  // const end = moment().add(10, "d")
-  // const startTime = moment()
-  // const duration = moment.duration(end.diff(startTime));
-  // const hours = duration.asHours();
-  // console.log("hours difference", hours)
-
-
   const handleBooking = async (bookID, sessionID) => {
-    console.log("bookID", bookID);
-    console.log("sessionID", sessionID);
-
     const newDate = new Date()
     const returnDate = add(new Date(), {days: 7,})
-    console.log("returnDate", returnDate);
     const data = {
       bookID: bookID,
       userID: sessionID,
@@ -77,6 +63,7 @@ function BookDetails() {
   };
   return (
     <div>
+      <Navbar />
       <Paper
         sx={{
           p: 4,

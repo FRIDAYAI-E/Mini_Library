@@ -1,16 +1,14 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import PropTypes from 'prop-types';
-const {format} = require('date-fns');
-
-
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import PropTypes from "prop-types";
+import format from "date-fns/format";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -23,19 +21,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 1,
   },
 }));
 
- const UserDueTable = ({loanData}) => {
-  console.log("props", loanData[0].dateReturned)
-const date = new Date();
-console.log(date);
-console.log(`${format(date, 'EEEE, MMMM do, yyyy')}`);
+const UserDueTable = ({ loanData }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
@@ -51,18 +45,25 @@ console.log(`${format(date, 'EEEE, MMMM do, yyyy')}`);
               <StyledTableCell component="th" scope="row">
                 {book.bookID.title}
               </StyledTableCell>
-              <StyledTableCell align="center">{book.dateReturned}</StyledTableCell>
+              {new Date() < new Date(book.dateReturned) ? (
+                <StyledTableCell align="center" sx={{ color: "black" }}>
+                  {format(new Date(book.dateReturned), "EEEE, MMMM do, yyyy")}
+                </StyledTableCell>
+              ) : (
+                <StyledTableCell align="center" sx={{ color: "red" }}>
+                  BOOK DUE : {format(new Date(book.dateReturned), "EEEE, MMMM do, yyyy")}
+                </StyledTableCell>
+              )}
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
-
-UserDueTable.propTypes = {
-  loanData: PropTypes.array
 };
 
+UserDueTable.propTypes = {
+  loanData: PropTypes.array,
+};
 
 export default UserDueTable;

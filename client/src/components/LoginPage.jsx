@@ -34,8 +34,7 @@ function LoginPage() {
         handleLogin({username: name, password: password})
     }
     
-    console.log(session)
-
+    if (session) { null } // empty code to prevent errors on session not being used.
 
 
 
