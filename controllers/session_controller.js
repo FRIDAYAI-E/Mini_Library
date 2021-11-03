@@ -12,6 +12,7 @@ router.get("/new", (req, res) => {
   res.json("Please Login again");
 });
 
+//* USER LOGIN CHECK
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username: username });
@@ -29,6 +30,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+//* USER LOG OUT
 router.delete("/", (req, res) => {
   req.session.destroy(() => {
     res.json({ message: "session destroyed" });

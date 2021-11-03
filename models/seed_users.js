@@ -1,6 +1,10 @@
+const SUPERUSER = "superuser";
+const ADMIN = "admin";
+const USER = "user";
+
 const seedUsers = [
   {
-    role: "superuser",
+    role: SUPERUSER,
     name: "superuser",
     username: "superuser",
     password: "superuser",
@@ -10,7 +14,7 @@ const seedUsers = [
     fines: 0,
   },
   {
-    role: "admin",
+    role: ADMIN,
     name: "John Davis",
     username: "jdavis",
     password: "jdavis",
@@ -20,7 +24,7 @@ const seedUsers = [
     fines: 0,
   },
   {
-    role: "user",
+    role: USER,
     name: "Mary Jone",
     username: "mjone",
     password: "mjone",
@@ -31,7 +35,7 @@ const seedUsers = [
     fines: 0,
   },
   {
-    role: "user",
+    role: USER,
     name: "Elvis Danny",
     username: "edanny",
     password: "edanny",
