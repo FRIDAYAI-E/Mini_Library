@@ -13,11 +13,11 @@ function NewUser() {
 
     const handleSubmit = (event) =>{
         event.preventDefault();
-        const name = event.target.name.value;
+        const username = event.target.username.value;
         const password = event.target.password.value;
         const email = event.target.email.value
         const role = "user"
-        createNewUser({name: name, password: password, email: email, role: role})
+        createNewUser({username: username, password: password, email: email, role: role})
     }
 
 
@@ -25,7 +25,7 @@ function NewUser() {
     <div>
       <h1>Create new User </h1>
       <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="name" />
+        <input name="username" placeholder="username" />
         <input name="password" placeholder="Password" />
         <input name="email" placeholder="Email" />
 

@@ -31,7 +31,7 @@ function LoginPage() {
         event.preventDefault();
         const name = event.target.name.value;
         const password = event.target.password.value;
-        handleLogin({name: name, password: password})
+        handleLogin({username: name, password: password})
     }
     
     console.log(session)
