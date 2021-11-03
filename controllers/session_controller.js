@@ -14,8 +14,9 @@ router.get('/new', (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-    const { name, password } = req.body;
-    const user = await User.findOne({ name: name })
+    const { username, password } = req.body;
+    const user = await User.findOne({ username: username })
+    console.log("user", user)
     if (user === null) {
         return res.json({ message: "There is no such user, Please try again" })
     }

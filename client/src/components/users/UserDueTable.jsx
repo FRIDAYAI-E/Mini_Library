@@ -8,6 +8,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import PropTypes from 'prop-types';
+const {format} = require('date-fns');
+
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,21 +31,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// function createData(name, dateBorrowed, ) {
-//   return { name, dateBorrowed, };
-// }
-
-// const rows = [
-//   createData('Adventure Chicken', "15/9/2021",),
-//   createData('Adventure Duck', "21/9/2021",),
-//   createData('Adventure Potato', "23/9/2021",),
-//   createData('Adventure Nugget', "18/12/2021",),
-//   createData('Adventure Sandwich', "24/10/2021",),
-// ];
-
  const UserDueTable = ({loanData}) => {
-  // console.log("props", loanData[0].bookID)
-  // const loanData = props.loanData
+  console.log("props", loanData[0].dateReturned)
+const date = new Date();
+console.log(date);
+console.log(`${format(date, 'EEEE, MMMM do, yyyy')}`);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
@@ -56,9 +49,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
           {loanData.map((book, index) => (
             <StyledTableRow key={index}>
               <StyledTableCell component="th" scope="row">
-                {book.bookID}
+                {book.bookID.title}
               </StyledTableCell>
-              <StyledTableCell align="center">{book.dateBorrowed}</StyledTableCell>
+              <StyledTableCell align="center">{book.dateReturned}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

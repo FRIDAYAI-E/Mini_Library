@@ -23,22 +23,34 @@ router.post("/", (req, res) => {
   });
 });
 
+//! =====================  ANGEAL EDITED HERE  =====================
+
 //* ROUTER => SPECIFIC ID READ ROUTE
-router.get("/:id", (req, res) => {
+router.get("/:id",  async (req, res) => {
   const { id } = req.params;
-  try {
-    console.log("id", id)
-    onLoans.find({userID: id}, (err, foundonLoans) => {
-      if (err) {
-        res.status(400).json({ error: err.message });
-      }
+     await onLoans.find({userID: id}).populate("bookID").exec((err, foundonLoans) => {
       console.log("foundonLoans", foundonLoans)
       res.status(200).json(foundonLoans);
     });
-  } catch (err) {
-    res.send(err.message);
-  }
 });
+//! =====================  ANGEAL EDITED HERE  =====================
+
+
+//* ROUTER => SPECIFIC ID READ ROUTE
+// router.get("/:id",  (req, res) => {
+//   const { id } = req.params;
+//   try {
+//      onLoans.find({userID: id}, (err, foundonLoans) => {
+//       if (err) {
+//         res.status(400).json({ error: err.message });
+//       }
+//       console.log("foundonLoans", foundonLoans)
+//       res.status(200).json(foundonLoans);
+//     });
+//   } catch (err) {
+//     res.send(err.message);
+//   }
+// });
 
 //* ROUTER => INDEX READ ROUTE
 router.get("/", isAuthenticated, (req, res) => {
