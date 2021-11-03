@@ -3,57 +3,46 @@ const router = express.Router();
 const onLoans = require("../models/onLoan.js");
 const seedOnLoans = require("../models/seed_onLoan.js");
 
-//* 5 + 2  REST routes => CREATE, ALL, READ1, UPDATE, DELETE (NEW Form, Edit Form)
+//* AUTH CHECK
+const SUPERUSER = "superuser";
+const ADMIN = "admin";
+const USER = "user";
 
-const isAuthenticated = (req, res, next) => {
+const isAuth = (roleArr) => (req, res, next) => {
   if (req.session.loginUser) {
-    return next();
-  } else {
-    res.status(404).json({ message: "Authentication required" });
+    for (const r of roleArr) {
+      if (req.session.role === r) {
+        return next();
+      }
+    }
   }
+  res.status(404).json({ message: "Authentication required" });
 };
 
-//* ROUTER => CREATE ROUTE
+//* CREATE LOAN ENTRY
 router.post("/", (req, res) => {
-  onLoans.create(req.body, (err, createdBook) => {
+  onLoans.create(req.body, (err, createdLoan) => {
     if (err) {
       res.status(400).json({ error: err.message });
     }
-    res.status(200).json(createdBook);
+    res.status(200).json(createdLoan);
   });
 });
 
-//! =====================  ANGEAL EDITED HERE  =====================
-
-//* ROUTER => SPECIFIC ID READ ROUTE
-router.get("/:id",  async (req, res) => {
+//* GET LOANS BY USERID
+router.get("/:id", isAuth([SUPERUSER, USER, ADMIN]), async (req, res) => {
   const { id } = req.params;
-     await onLoans.find({userID: id}).populate("bookID").exec((err, foundonLoans) => {
-      console.log("foundonLoans", foundonLoans)
+  onLoans
+    .find({ userID: id })
+    .populate("bookID")
+    .exec((err, foundonLoans) => {
+      console.log("foundonLoans", foundonLoans);
       res.status(200).json(foundonLoans);
     });
 });
-//! =====================  ANGEAL EDITED HERE  =====================
 
-
-//* ROUTER => SPECIFIC ID READ ROUTE
-// router.get("/:id",  (req, res) => {
-//   const { id } = req.params;
-//   try {
-//      onLoans.find({userID: id}, (err, foundonLoans) => {
-//       if (err) {
-//         res.status(400).json({ error: err.message });
-//       }
-//       console.log("foundonLoans", foundonLoans)
-//       res.status(200).json(foundonLoans);
-//     });
-//   } catch (err) {
-//     res.send(err.message);
-//   }
-// });
-
-//* ROUTER => INDEX READ ROUTE
-router.get("/", isAuthenticated, (req, res) => {
+//* GET ENTIRE LOANS HISTORY
+router.get("/", isAuth([SUPERUSER, ADMIN]), (req, res) => {
   try {
     onLoans.find({}, (err, foundonLoans) => {
       if (err) {
@@ -64,10 +53,10 @@ router.get("/", isAuthenticated, (req, res) => {
   } catch (err) {
     res.send(err.message);
   }
-})
+});
 
-//* ROUTER => SEEDING ROUTE
-router.get("/seed", async (req, res) => {
+//* SEED LOAN ENTRIES
+router.get("/seed", isAuth([SUPERUSER]), async (req, res) => {
   try {
     await onLoans.deleteMany({});
     const seed = await onLoans.create(seedOnLoans);
@@ -77,56 +66,29 @@ router.get("/seed", async (req, res) => {
   }
 });
 
-//* ROUTER => GET ONLOAN BOOKS AND TITLE
-router.get('/allonLoans', async (req, res) => {
-    const onLoanBooks = await onLoans.find({}).populate({
-        path: 'bookID',
-    }).exec((err, book) => {
-        if (err) {
-            return res.status(400).json({ error: err.message });
-        }
-        console.log("success")
-        res.status(200).json(book)
-    })
-})
-
-
-//* ROUTER => DELETE ROUTE
-router.delete("/:id", isAuthenticated, (req, res) => {
-    onLoans.findByIdAndDelete(req.params.id, (err, deletedonLoan) => {
-        if (err) {
-            res.status(400).json({ error: err.message });
-        }
-        res.status(200).json(deletedonLoan);
-    })
-})
-
-//* ROUTE = UPDATE ROUTE
-router.put("/:id", isAuthenticated, (req, res) => {
-    onLoans.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true },
-        (err, updatedonLoans) => {
-            if (err) {
-                res.status(400).json({ error: err.message });
-            }
-            res.status(200).json(updatedonLoans);
-        }
-    );
+//* DELETE ENTRIES (No use-case other than dev)
+router.delete("/:id", isAuth([SUPERUSER]), (req, res) => {
+  onLoans.findByIdAndDelete(req.params.id, (err, deletedonLoan) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    }
+    res.status(200).json(deletedonLoan);
+  });
 });
 
-
-//* ROUTER => SEEDING ROUTE
-router.get('/seed', async (req, res) => {
-    try {
-        await onLoans.deleteMany({});
-        const seed = await onLoans.create(seedOnLoans)
-        res.send(seed);
-    } catch (err) {
-        res.send(err.message);
+//* UPDATE SPECIFIC ENTRY (For ADMIN to enter dateReturned)
+router.put("/:id", isAuth([SUPERUSER, ADMIN]), (req, res) => {
+  onLoans.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true },
+    (err, updatedonLoans) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+      }
+      res.status(200).json(updatedonLoans);
     }
-  ;
+  );
 });
 
 module.exports = router;
