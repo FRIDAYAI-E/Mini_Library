@@ -45,9 +45,15 @@ const UserDueTable = ({ loanData }) => {
               <StyledTableCell component="th" scope="row">
                 {book.bookID.title}
               </StyledTableCell>
-              <StyledTableCell align="center">
-                {format(new Date(book.dateReturned), "EEEE, MMMM do, yyyy")}
-              </StyledTableCell>
+              {new Date() < new Date(book.dateReturned) ? (
+                <StyledTableCell align="center" sx={{ color: "black" }}>
+                  {format(new Date(book.dateReturned), "EEEE, MMMM do, yyyy")}
+                </StyledTableCell>
+              ) : (
+                <StyledTableCell align="center" sx={{ color: "red" }}>
+                  BOOK DUE : {format(new Date(book.dateReturned), "EEEE, MMMM do, yyyy")}
+                </StyledTableCell>
+              )}
             </StyledTableRow>
           ))}
         </TableBody>
