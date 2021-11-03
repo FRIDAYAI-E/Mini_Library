@@ -1,24 +1,36 @@
-import {
-  Button,
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar";
 import { useHistory } from "react-router";
 import axios from "axios";
+import { NavLink, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+// import { useAtom } from "jotai";
+// import { rowAtom } from "./ManageBooks";
 
-const BookUpdateCreate = () => {
+const BookUpdateCreate = (props) => {
+  const { action } = props;
   let history = useHistory();
+  // const [row] = useAtom(rowAtom);
   const [genre, setGenre] = useState([]);
   const [submission, setSubmission] = useState({});
+  // const [entry, setEntry] = useState({});
+
   useEffect(async () => {
     const res = await axios.get("/api/book/genre");
+    console.log(res.data);
     setGenre(res.data);
   }, []);
+
+  const { id } = useParams();
+
+  useEffect(async () => {
+    if (action === "UPDATE") {
+      const res = await axios.get(`/api/book/${id}`);
+      setSubmission(res.data);
+    }
+  }, [id]);
 
   const handleChange = (e, field) => {
     e.preventDefault();
@@ -26,12 +38,23 @@ const BookUpdateCreate = () => {
     console.log(e.target.value);
   };
 
-  const handleConfirm = (e) => {
-    e.preventDefault();
-    console.log(submission);
+  const createCollection = (collectionObj) => {
     axios
-      .post("/api/book", submission)
+      .post("/api/book", collectionObj)
       .then(console.log(`New collection created successfully`));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // const result = {};
+    // result.title = e.target.title.value;
+    // result.genre = e.target.genre.value;
+    // result.qty = e.target.qty.value;
+    // result.bookImg = e.target.bookImg.value;
+    // result.author = e.target.author.value;
+    // result.description = e.target.description.value;
+    // console.log("create collection", result);
+    createCollection(submission);
     history.push("/admin/managebooks");
   };
 
@@ -39,71 +62,89 @@ const BookUpdateCreate = () => {
     <div>
       <Navbar />
       <Box>
-        <Button variant="contained" color="error">
-          Delete Book
-        </Button>
+        {action === "CREATE" ? (
+          ""
+        ) : (
+          <Button variant="contained" color="error">
+            Delete Book
+          </Button>
+        )}
         {/* //! ADD CONFIRMATION */}
       </Box>
-      <FormControl type="paper">
-        <TextField
-          required
-          label="Title"
-          onChange={(e) => {
-            handleChange(e, "title");
-          }}
-        ></TextField>
-        {/* <InputLabel id="genre-label">Genre</InputLabel> */}
-        <Select
-          label="genre"
-          value={genre?.[0]}
-          onChange={(e) => {
-            handleChange(e, "genre");
-          }}
-        >
-          {genre.map((g) => (
-            <MenuItem key={g} value={g}>
-              {g}
-            </MenuItem>
-          ))}
-        </Select>
-        <TextField
-          required
-          label="Quantity"
-          onChange={(e) => {
-            handleChange(e, "qty");
-          }}
-        ></TextField>
-        <TextField
-          label="ImageUrl"
-          onChange={(e) => {
-            handleChange(e, "bookImg");
-          }}
-        ></TextField>
-        <TextField
-          label="Author"
-          onChange={(e) => {
-            handleChange(e, "author");
-          }}
-        ></TextField>
-        <TextField
-          label="Description"
-          onChange={(e) => {
-            handleChange(e, "description");
-          }}
-        ></TextField>
-        <Button variant="contained" onClick={handleConfirm}>
-          Confirm
-        </Button>
-        <Button
-          onClick={() => {
-            history.push("/admin/managebooks");
-          }}
-        >
-          Cancel
-        </Button>
-      </FormControl>
+      <Box>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="title"
+            placeholder="title"
+            onChange={(e) => {
+              handleChange(e, "title");
+            }}
+            value={action === "UPDATE" ? submission.title : ""}
+          />
+          <select
+            name="genre"
+            id="genre"
+            onChange={(e) => {
+              handleChange(e, "genre");
+            }}
+            value={action === "UPDATE" ? submission.genre : ""}
+          >
+            {genre.map((g) => (
+              <option key={g} value={g}>
+                {g}
+              </option>
+            ))}
+          </select>
+          <input
+            type="number"
+            name="qty"
+            id="input-qty"
+            placeholder="Quantity"
+            onChange={(e) => {
+              handleChange(e, "qty");
+            }}
+            value={action === "UPDATE" ? submission.qty : ""}
+          />
+          <input
+            type="text"
+            name="bookImg"
+            placeholder="Image Url"
+            onChange={(e) => {
+              handleChange(e, "bookImg");
+            }}
+            value={action === "UPDATE" ? submission.bookImg : ""}
+          />
+          <input
+            type="text"
+            name="author"
+            placeholder="Author"
+            onChange={(e) => {
+              handleChange(e, "author");
+            }}
+            value={action === "UPDATE" ? submission.author : ""}
+          />
+          <input
+            type="text"
+            name="description"
+            placeholder="Description"
+            onChange={(e) => {
+              handleChange(e, "description");
+            }}
+            value={action === "UPDATE" ? submission.description : ""}
+          />
+          <input type="submit" value="Confirm" />
+        </form>
+      </Box>
+      <NavLink to={"/admin/managebooks"}>
+        <Button>Cancel</Button>
+      </NavLink>
     </div>
   );
 };
 
 export default BookUpdateCreate;
+
+BookUpdateCreate.propTypes = {
+  action: PropTypes.string,
+};

@@ -5,6 +5,8 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import Navbar from "../Navbar";
 import TableComponent from "../TableComponent";
+import { NavLink } from "react-router-dom";
+import { atom, useAtom } from "jotai";
 
 const columns = [
   {
@@ -20,6 +22,8 @@ const columns = [
   },
 ];
 
+export const rowAtom = atom("");
+
 const ManageBooks = () => {
   let history = useHistory();
 
@@ -28,15 +32,16 @@ const ManageBooks = () => {
     const getBooks = async () => {
       const res = await axios.get("/api/book");
       setBooks(res.data);
-      console.log(res);
     };
     getBooks();
   }, []);
 
-  // const handleAddBook = () => {};
+  const [row, setRow] = useAtom(rowAtom);
 
   const clickHandler = (e, rowData) => {
+    setRow(rowData);
     console.log("Row click", rowData);
+    history.push(`/admin/managebooks/${rowData._id}/edit`);
   };
 
   return (
@@ -45,6 +50,8 @@ const ManageBooks = () => {
       <Box>
         <Button
           onClick={() => {
+            setRow(null);
+            console.log(row);
             history.push("/admin/addcollection");
           }}
           variant="contained"
@@ -59,14 +66,9 @@ const ManageBooks = () => {
         options={{ pageSize: 10 }}
         click={clickHandler}
       />
-      <Button
-        onClick={() => {
-          history.push("/admin/dashboard");
-        }}
-        variant="outlined"
-      >
-        Back
-      </Button>
+      <NavLink to={"/admin/dashboard"}>
+        <Button>Back</Button>
+      </NavLink>
     </div>
   );
 };
