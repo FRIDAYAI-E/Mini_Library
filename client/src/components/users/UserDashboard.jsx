@@ -7,6 +7,8 @@ import axios from "axios";
 import { sessionAtom } from "../LoginPage"
 import { useAtom } from 'jotai'
 import { useHistory } from "react-router-dom";
+import Navbar from "../Navbar";
+
 
 
 function userDashboard() {
@@ -15,7 +17,6 @@ function userDashboard() {
   
     const data = useAtom(sessionAtom)[0]
     const userID = data?.loginUser?._id
-    console.log("atom", data)
     let history = useHistory()
 
     const isAuthenticated = () => {
@@ -30,7 +31,6 @@ function userDashboard() {
       try {
         const response = await axios.get(`/api/onloan/${userID}`);
         setStatus("loading");
-        console.log("response", response.data);
         setLoanData(response.data);
         setStatus("resolved");
       } catch (error) {
@@ -44,20 +44,21 @@ function userDashboard() {
   return (
     <>
       <div>
+      <Navbar />
         {data.loginUser === undefined ?
           ( null ): (<h1>Welcome : {data?.loginUser?.username} </h1>)
         }
-
-        
         <NavLink to={"/browsebooks"}>
           <button>Browse Books!</button>
         </NavLink>
         {status === "resolved" ? (
+          <>
           <UserDueTable loanData={loanData} />
+          <UserFines loanData={loanData}/>
+          </>
         ) : (
           <h1>Loading</h1>
         )}
-        <UserFines />
       </div>
     </>
   );
