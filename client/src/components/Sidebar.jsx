@@ -19,12 +19,12 @@ const standardItems = [
   {
     listIcons: <LogoutIcon />,
     listText: "Logout",
-    listLink: "logout",
+    listLink: "/Logout",
   },
   {
     listIcons: <HelpIcon />,
     listText: "Help",
-    listLink: "logout",
+    listLink: "Help",
   },
 ];
 
@@ -70,7 +70,11 @@ export default function sidebar(props) {
         {standardItems.map((element, index) => (
           <ListItem button key={index}>
             <ListItemIcon>{element.listIcons}</ListItemIcon>
-            <ListItemText primary={element.listText} />
+            <ListItemText
+              primary={
+                <NavLink to={`${element.listLink}`}>{element.listText}</NavLink>
+              }
+            />
           </ListItem>
         ))}
       </List>
