@@ -18,8 +18,7 @@ function LoginPage() {
       .then((res) => {
         setSession(res.data);
         setNetworkStatus("resolved");
-        history.push("/login");
-        //! TESTING CHANGE BACK TO "/user/dashboard"
+        history.push("/user/dashboard");
       })
       .catch(function (error) {
         console.log(error);
