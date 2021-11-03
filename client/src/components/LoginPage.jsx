@@ -12,7 +12,6 @@ function LoginPage() {
   let history = useHistory();
 
   const handleLogin = async (loginDetails) => {
-    console.log("logindetails", loginDetails);
     await axios
       .post(`/api/session/`, loginDetails)
       .then((res) => {
@@ -33,12 +32,12 @@ function LoginPage() {
     handleLogin({ username: username, password: password });
   };
 
-  console.log(session);
+  if (session) { null } // empty code to prevent errors on session not being used.
 
-  return (
-    <div>
-      <h1> Login page </h1>
-      <form onSubmit={handleSubmit}>
+    return (
+        <div>
+        <h1 className="login"> Login page </h1>
+        <form onSubmit={handleSubmit}>
         <input name="username" placeholder="username" />
         <input name="password" placeholder="Password" />
         <button>Login</button>
@@ -48,7 +47,7 @@ function LoginPage() {
           <h1>Incorrect login details. Please try again</h1>
         </div>
       ) : null}
-    </div>
+        </div>
   );
 }
 

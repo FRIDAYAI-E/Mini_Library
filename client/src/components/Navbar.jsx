@@ -1,7 +1,6 @@
 import * as React from "react";
 import { AppBar, Toolbar, Button, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { format } from "date-fns";

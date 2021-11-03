@@ -14,16 +14,14 @@ import Remove from "@material-ui/icons/Remove";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import Info from "@material-ui/icons/Info";
-import {useEffect, useState} from "react"
-import axios from "axios"
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { atom, useAtom } from "jotai"
-import { sessionAtom } from "../LoginPage"
+import { atom, useAtom } from "jotai";
+import { sessionAtom } from "../LoginPage";
 import Navbar from "../Navbar";
 
-
-
-export const arrAtom = atom([])
+export const arrAtom = atom([]);
 
 function BrowseBooks() {
   const tableIcons = {
@@ -46,91 +44,95 @@ function BrowseBooks() {
   };
   const [status, setStatus] = useState("pending");
   const [bookData, setBookData] = useState();
-  const [bookSelection, setBookSelection] = useAtom(arrAtom)
-  
-  if (bookSelection) {null} // empty code to prevent errors
+  const [bookSelection, setBookSelection] = useAtom(arrAtom);
 
-  const data = useAtom(sessionAtom)[0]
+  if (bookSelection) {
+    null;
+  } // empty code to prevent errors
+
+  const data = useAtom(sessionAtom)[0];
   // console.log("atom", data)
-  let history = useHistory()
+  let history = useHistory();
 
   const isAuthenticated = () => {
-    if(data.loginUser === undefined) {
+    if (data.loginUser === undefined) {
       history.push("/login");
     }
-  }
-  isAuthenticated()
+  };
+  isAuthenticated();
 
-
-  useEffect( () => {
-    const getData = async() => {
-      try{
-        const response = await axios.get(`/api/book`)
-        setStatus("loading")
-        setBookData(response.data)
-        setStatus("resolved")
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`/api/book`);
+        setStatus("loading");
+        setBookData(response.data);
+        setStatus("resolved");
       } catch (error) {
-        console.log("error", error)
+        console.log("error", error);
       }
     };
-    getData()    
+    getData();
   }, []);
 
   const handleRowClick = (event, rowData) => {
-      history.push(`/browseBooks/${rowData._id}`);
-      // console.log("bookSelection", bookSelection)
-      setBookSelection(rowData)
+    history.push(`/browseBooks/${rowData._id}`);
+    setBookSelection(rowData);
   };
 
   return (
     <>
-    <Navbar />
-    {status === "resolved" ? (<div>
-        <MaterialTable
-          style={{ boxShadow: "none", marginBottom: "3%" }}
-          icons={tableIcons}
-          onRowClick={handleRowClick}
-          columns={[
-            {
-              title: "Title",
-              field: "title",
-              align: "left",
-              defaultSort: "asc",
-            },
-            {
-              title: "Genre",
-              field: "genre",
-              align: "justify",
-            },
-            {
-              title: "Rating",
-              field: "rating",
-            },
-            { title: "Author", field: "author", align: "justify" },
-            {
-              title: "Availability",
-              field: "availability",
-              align: "justify",
-            },
-          ]}
-          title="Browse Books"
-          data = {bookData}
-          options={{
-            pageSize: 10,
-            pageSizeOptions: [5, 10, 50],
-            draggable: false,
-            maxBodyHeight: "100vh",
-            tableLayout: "auto",
-            showFirstLastPageButtons: false,
-            headerStyle: {
-              position: "sticky",
-              height: 0,
-              background: "#DCDCDC",
-            },
-          }}
-        />
-      </div>) : null }
-      
+      <Navbar />
+      {status === "resolved" ? (
+        <div>
+          <MaterialTable
+            style={{ boxShadow: "none", marginBottom: "3%" }}
+            icons={tableIcons}
+            onRowClick={handleRowClick}
+            columns={[
+              {
+                title: "Title",
+                field: "title",
+                align: "left",
+                defaultSort: "asc",
+              },
+              {
+                title: "Genre",
+                field: "genre",
+                align: "justify",
+              },
+              {
+                title: "Rating",
+                field: "rating",
+              },
+              { title: "Author", field: "author", align: "justify" },
+              {
+                title: "Availability",
+                field: "availability",
+                align: "justify",
+              },
+            ]}
+            title="aLibrary"
+            data={bookData}
+            options={{
+              pageSize: 10,
+              pageSizeOptions: [5, 10, 50],
+              draggable: false,
+              maxBodyHeight: "100vh",
+              tableLayout: "auto",
+              showFirstLastPageButtons: false,
+              rowStyle: {
+                fontSize: 15,
+              },
+              headerStyle: {
+                position: "sticky",
+                height: 0,
+                background: "#DCDCDC",
+              },
+            }}
+          />
+        </div>
+      ) : null}
     </>
   );
 }
