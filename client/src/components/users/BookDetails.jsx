@@ -47,12 +47,8 @@ function BookDetails() {
 
 
   const handleBooking = async (bookID, sessionID) => {
-    console.log("bookID", bookID);
-    console.log("sessionID", sessionID);
-
     const newDate = new Date()
     const returnDate = add(new Date(), {days: 7,})
-    console.log("returnDate", returnDate);
     const data = {
       bookID: bookID,
       userID: sessionID,

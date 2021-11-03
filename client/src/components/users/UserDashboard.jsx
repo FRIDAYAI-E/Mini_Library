@@ -15,7 +15,6 @@ function userDashboard() {
   
     const data = useAtom(sessionAtom)[0]
     const userID = data?.loginUser?._id
-    console.log("atom", data)
     let history = useHistory()
 
     const isAuthenticated = () => {
@@ -30,7 +29,6 @@ function userDashboard() {
       try {
         const response = await axios.get(`/api/onloan/${userID}`);
         setStatus("loading");
-        console.log("response", response.data);
         setLoanData(response.data);
         setStatus("resolved");
       } catch (error) {

@@ -46,9 +46,10 @@ function BrowseBooks() {
   const [bookData, setBookData] = useState();
   const [bookSelection, setBookSelection] = useAtom(arrAtom)
   
+  if (bookSelection) {null} // empty code to prevent errors
 
   const data = useAtom(sessionAtom)[0]
-  console.log("atom", data)
+  // console.log("atom", data)
   let history = useHistory()
 
   const isAuthenticated = () => {
@@ -66,7 +67,6 @@ function BrowseBooks() {
         setStatus("loading")
         setBookData(response.data)
         setStatus("resolved")
-        console.log("network status:", status, bookData)
       } catch (error) {
         console.log("error", error)
       }
@@ -76,13 +76,14 @@ function BrowseBooks() {
 
   const handleRowClick = (event, rowData) => {
       history.push(`/browseBooks/${rowData._id}`);
-      console.log("bookSelection", bookSelection)
+      // console.log("bookSelection", bookSelection)
       setBookSelection(rowData)
   };
 
   return (
     <>
-      <div>
+
+    {status === "resolved" ? (<div>
         <MaterialTable
           style={{ boxShadow: "none", marginBottom: "3%" }}
           icons={tableIcons}
@@ -126,7 +127,8 @@ function BrowseBooks() {
             },
           }}
         />
-      </div>
+      </div>) : null }
+      
     </>
   );
 }
