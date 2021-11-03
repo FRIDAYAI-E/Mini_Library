@@ -13,6 +13,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HelpIcon from "@mui/icons-material/Help";
+import { NavLink } from "react-router-dom";
 
 const standardItems = [
   {
@@ -56,7 +57,11 @@ export default function sidebar(props) {
         {props.menuItem.map((element, index) => (
           <ListItem button key={index}>
             <ListItemIcon>{element.listIcons}</ListItemIcon>
-            <ListItemText primary={element.listText} />
+            <ListItemText
+              primary={
+                <NavLink to={`${element.listLink}`}>{element.listText}</NavLink>
+              }
+            />
           </ListItem>
         ))}
       </List>
