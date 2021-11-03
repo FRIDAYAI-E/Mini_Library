@@ -1,7 +1,9 @@
 import * as React from "react";
-import { AppBar, Toolbar, Button, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import LogoutIcon from "@mui/icons-material/Logout";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+import AddIcon from "@mui/icons-material/Add";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { format } from "date-fns";
 import { useAtom } from "jotai";
@@ -11,9 +13,14 @@ import Sidebar from "./Sidebar";
 
 const userMenuItems = [
   {
+    listIcons: <DashboardIcon />,
+    listText: "Dashboard",
+    listLink: "/user/dashboard",
+  },
+  {
     listIcons: <SearchIcon />,
     listText: "BrowseBooks",
-    listLink: "browseBook",
+    listLink: "/browseBooks",
   },
 ];
 
@@ -21,7 +28,22 @@ const adminMenuItems = [
   {
     listIcons: <DashboardIcon />,
     listText: "Admin Panel",
-    listLink: "admin/dashboard",
+    listLink: "/admin/dashboard",
+  },
+  {
+    listIcons: <ManageSearchIcon />,
+    listText: "Manage Books",
+    listLink: "/admin/managebooks",
+  },
+  {
+    listIcons: <AddIcon />,
+    listText: "Add Collection",
+    listLink: "/admin/addcollection",
+  },
+  {
+    listIcons: <KeyboardReturnIcon />,
+    listText: "Books Returns",
+    listLink: "/admin/managereturns",
   },
 ];
 
@@ -29,12 +51,32 @@ const allMenuItems = [
   {
     listIcons: <DashboardIcon />,
     listText: "Admin Panel",
-    listLink: "admin/dashboard",
+    listLink: "/admin/dashboard",
+  },
+  {
+    listIcons: <ManageSearchIcon />,
+    listText: "Manage Books",
+    listLink: "/admin/managebooks",
+  },
+  {
+    listIcons: <AddIcon />,
+    listText: "Add Collection",
+    listLink: "/admin/addcollection",
+  },
+  {
+    listIcons: <KeyboardReturnIcon />,
+    listText: "Books Returns",
+    listLink: "/admin/managereturns",
+  },
+  {
+    listIcons: <DashboardIcon />,
+    listText: "Dashboard",
+    listLink: "/user/dashboard",
   },
   {
     listIcons: <SearchIcon />,
     listText: "BrowseBooks",
-    listLink: "browseBook",
+    listLink: "/browseBooks",
   },
 ];
 
@@ -64,14 +106,9 @@ export default function TemporaryDrawer() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               aLibrary
             </Typography>
-            <Typography>Welcome Back {data.loginUser.username}!</Typography>
             <Typography>
               Today is the {format(new Date(), "do MMMM Y")}
             </Typography>
-            <Button color="inherit">
-              <LogoutIcon />
-              Logout
-            </Button>
           </Toolbar>
         </AppBar>
       )}

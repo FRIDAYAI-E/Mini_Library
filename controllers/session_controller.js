@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
 //* USER LOG OUT
 router.delete("/", (req, res) => {
   req.session.destroy(() => {
-    res.json({ message: "session destroyed" });
+    res.status(200).json({ message: "session destroyed" });
   });
 });
 

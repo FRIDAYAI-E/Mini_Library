@@ -12,6 +12,7 @@ import BookDetails from "./components/users/BookDetails";
 import SuccessBooking from "./components/users/SuccessBooking";
 import NewUser from "./components/users/NewUser";
 import LoginPage from "./components/LoginPage";
+import LogoutPage from "./components/LogoutPage";
 import HomePage from "./components/HomePage";
 
 function App() {
@@ -69,6 +70,12 @@ function App() {
           </Route>
           <Route path="/books/success">
             <SuccessBooking />
+          </Route>
+          {
+            //!      ====================    General routes  =========================
+          }
+          <Route path="/logout">
+            <LogoutPage />
           </Route>
         </Switch>
       </div>
