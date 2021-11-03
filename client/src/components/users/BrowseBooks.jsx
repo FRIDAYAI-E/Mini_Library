@@ -19,6 +19,8 @@ import axios from "axios"
 import { useHistory } from "react-router-dom";
 import { atom, useAtom } from "jotai"
 import { sessionAtom } from "../LoginPage"
+import Navbar from "../Navbar";
+
 
 
 export const arrAtom = atom([])
@@ -82,7 +84,7 @@ function BrowseBooks() {
 
   return (
     <>
-
+    <Navbar />
     {status === "resolved" ? (<div>
         <MaterialTable
           style={{ boxShadow: "none", marginBottom: "3%" }}

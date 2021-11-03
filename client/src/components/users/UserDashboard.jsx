@@ -7,6 +7,8 @@ import axios from "axios";
 import { sessionAtom } from "../LoginPage"
 import { useAtom } from 'jotai'
 import { useHistory } from "react-router-dom";
+import Navbar from "../Navbar";
+
 
 
 function userDashboard() {
@@ -42,11 +44,10 @@ function userDashboard() {
   return (
     <>
       <div>
+      <Navbar />
         {data.loginUser === undefined ?
           ( null ): (<h1>Welcome : {data?.loginUser?.username} </h1>)
         }
-
-        
         <NavLink to={"/browsebooks"}>
           <button>Browse Books!</button>
         </NavLink>

@@ -11,6 +11,7 @@ import { useAtom } from "jotai";
 import { useHistory } from "react-router-dom";
 import { sessionAtom } from "../LoginPage";
 import { add } from 'date-fns'
+import Navbar from "../Navbar";
 
 function BookDetails() {
   const Img = styled("img")({
@@ -62,6 +63,7 @@ function BookDetails() {
   };
   return (
     <div>
+      <Navbar />
       <Paper
         sx={{
           p: 4,
