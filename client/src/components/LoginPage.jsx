@@ -36,7 +36,7 @@ function LoginPage() {
 
     return (
         <div>
-        <h1> Login page </h1>
+        <h1 className="login"> Login page </h1>
         <form onSubmit={handleSubmit}>
         <input name="username" placeholder="username" />
         <input name="password" placeholder="Password" />

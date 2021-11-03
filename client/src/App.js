@@ -12,6 +12,7 @@ import BookDetails from "./components/users/BookDetails";
 import SuccessBooking from "./components/users/SuccessBooking";
 import NewUser from "./components/users/NewUser";
 import LoginPage from "./components/LoginPage";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
@@ -22,8 +23,12 @@ function App() {
           <Login />
         </Route> */}
           {
-            //!      ====================    Admin routes  =========================
+            //*      ====================    All routes  =========================
           }
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+
           <Route path="/login">
             <LoginPage />
           </Route>
