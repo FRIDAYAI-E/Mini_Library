@@ -53,11 +53,13 @@ function userDashboard() {
           <button>Browse Books!</button>
         </NavLink>
         {status === "resolved" ? (
+          <>
           <UserDueTable loanData={loanData} />
+          <UserFines loanData={loanData}/>
+          </>
         ) : (
           <h1>Loading</h1>
         )}
-        <UserFines />
       </div>
     </>
   );

@@ -80,27 +80,6 @@ function BrowseBooks() {
       setBookSelection(rowData)
   };
 
-    // const BookData = [{
-    //   title: " adventure chicken",
-    //   genre: "fiction",
-    //   rating: 4,
-    //   author: "mr chicken",
-    //   availability: "yes"
-    // },
-    // {
-    //   title: " adventure duck",
-    //   genre: "fiction",
-    //   rating: 1,
-    //   author: "mr duck",
-    //   availability: "no"
-    // },{
-    //   title: " adventure potato",
-    //   genre: "fiction",
-    //   rating: 2,
-    //   author: "mr potato",
-    //   availability: "yes"
-    // },]
-
   return (
     <>
       <div>
