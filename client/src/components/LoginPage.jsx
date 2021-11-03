@@ -12,7 +12,6 @@ function LoginPage() {
   let history = useHistory();
 
   const handleLogin = async (loginDetails) => {
-    console.log("logindetails", loginDetails);
     await axios
       .post(`/api/session/`, loginDetails)
       .then((res) => {
