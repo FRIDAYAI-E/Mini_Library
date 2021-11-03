@@ -13,6 +13,7 @@ import SuccessBooking from "./components/users/SuccessBooking";
 import NewUser from "./components/users/NewUser";
 import LoginPage from "./components/LoginPage";
 import LogoutPage from "./components/LogoutPage";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
@@ -23,8 +24,12 @@ function App() {
           <Login />
         </Route> */}
           {
-            //!      ====================    Admin routes  =========================
+            //*      ====================    All routes  =========================
           }
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+
           <Route path="/login">
             <LoginPage />
           </Route>

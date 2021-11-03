@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  font: bold 24px/45px Helvetica, Sans-Serif; 
+  letter-spacing: -1px;  
 }
 
 .App-logo {
@@ -35,4 +37,49 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.image { 
+  position: relative; 
+  object-fit: fill;
+  width: 100%; 
+    height: 100%; 
+  
+}
+
+.welcome { 
+ position: absolute; 
+ top: 500px; 
+ width: 100%; 
+}
+
+.welcome span { 
+  color: white; 
+  font: bold 24px/45px Helvetica, Sans-Serif; 
+  letter-spacing: -1px;  
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px; 
+}
+
+.specialFont {
+  color: white; 
+  font: bold 24px/45px Helvetica, Sans-Serif; 
+  letter-spacing: -1px;  
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px; 
+  display: inline
+}
+
+.login {
+  color: white; 
+  font: bold 90px Helvetica, Sans-Serif; 
+  letter-spacing: -1px;  
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.4);
+  padding: 40px; 
+  padding-bottom: 50px;
+  display: inline
 }
