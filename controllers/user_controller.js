@@ -50,7 +50,7 @@ router.get("/", isAuth([SUPERUSER, ADMIN]), (req, res) => {
 });
 
 //* ROUTER => SEED USERS ROUTE
-router.get("/seed", isAuth([SUPERUSER]), async (req, res) => {
+router.get("/seed", async (req, res) => {
   try {
     await Users.deleteMany({});
     for (const u of seedUsers) {
