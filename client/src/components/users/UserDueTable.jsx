@@ -12,7 +12,7 @@ import format from "date-fns/format";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "#8f8f8f",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {

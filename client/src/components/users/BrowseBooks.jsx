@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "../Navbar";
 import MaterialTable from "@material-table/core";
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
@@ -19,7 +20,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { atom, useAtom } from "jotai";
 import { sessionAtom } from "../LoginPage";
-import Navbar from "../Navbar";
 
 export const arrAtom = atom([]);
 

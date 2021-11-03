@@ -1,5 +1,6 @@
 import * as React from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { Toolbar, Typography } from "@mui/material";
+import AppBar from '@material-ui/core/AppBar'
 import SearchIcon from "@mui/icons-material/Search";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import AddIcon from "@mui/icons-material/Add";
@@ -100,7 +101,7 @@ export default function TemporaryDrawer() {
       {data.loginUser === undefined ? (
         <div />
       ) : (
-        <AppBar position="static">
+        <AppBar position="static"  style={{ background: '#bcbcbc' }}>
           <Toolbar>
             <Sidebar menuItem={activeRole(data.role)} />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
