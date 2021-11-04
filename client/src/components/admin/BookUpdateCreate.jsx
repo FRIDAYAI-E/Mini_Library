@@ -27,7 +27,7 @@ const BookUpdateCreate = (props) => {
 
   useEffect(async () => {
     if (action === "UPDATE") {
-      const res = await axios.get(`/api/book/${id}`);
+      const res = await axios.put(`/api/book/${id}`);
       setSubmission(res.data);
     }
   }, [id]);
@@ -38,9 +38,8 @@ const BookUpdateCreate = (props) => {
     console.log(e.target.value);
   };
 
-  const createCollection = (collectionObj) => {
-    console.log(`createCol: ${JSON.stringify(collectionObj)}`);
-    axios
+  const createCollection = async (collectionObj) => {
+    await axios
       .post("/api/book", collectionObj)
       .then((res) =>
         console.log(`New collection created successfully: ${res.data}`)
@@ -55,6 +54,16 @@ const BookUpdateCreate = (props) => {
     createCollection(submission);
     history.push("/admin/managebooks");
   };
+
+  // const handleUpdates = async (e) => {
+  // e.preventDefault();
+  // await axios.get("/api/book/${id}", setsubmission)
+  // .then((res) => {
+  //  console.log(res);
+  //  console.log(res.data);
+  //
+
+  // }
 
   return (
     <div>
