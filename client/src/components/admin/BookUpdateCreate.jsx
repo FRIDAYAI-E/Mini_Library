@@ -78,7 +78,7 @@ const BookUpdateCreate = (props) => {
   return (
     <div>
       <Navbar />
-      <Box class={action === "UPDATE" ? "" : "disabled"}>
+      <Box className={action === "UPDATE" ? "" : "disabled"}>
         <Button variant="contained" color="error" onClick={handleDelete}>
           Delete Book
         </Button>
