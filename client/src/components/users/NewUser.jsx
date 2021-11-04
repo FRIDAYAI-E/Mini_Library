@@ -15,7 +15,7 @@ function NewUser() {
 
   const checkUser = async (user) => {
     await axios
-      .post("/api/user/check", { username: user.username , email: user.email})
+      .post("/api/user/check", { username: user.username, email: user.email })
       .then((res) => {
         if (res.data[0] === undefined) {
           setStatus("available");
@@ -54,10 +54,11 @@ function NewUser() {
         <button>Create New User</button>
       </form>
 
-      {status === "unavailable" ? <h5>Sorry the username/email is taken </h5> : null}
+      {status === "unavailable" ? (
+        <h5>Sorry the username/email is taken </h5>
+      ) : null}
     </div>
   );
 }
 
 export default NewUser;
-
