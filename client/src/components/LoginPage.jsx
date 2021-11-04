@@ -3,6 +3,7 @@ import axios from "axios";
 import { atom, useAtom } from "jotai";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const sessionAtom = atom([]);
 
@@ -17,8 +18,11 @@ function LoginPage() {
       .then((res) => {
         setSession(res.data);
         setNetworkStatus("resolved");
-        if(res.data.loginUser.role === "admin"){history.push("/admin/dashboard")}
-        else if (res.data.loginUser.role === "user") {history.push("/user/dashboard")}
+        if (res.data.loginUser.role === "admin") {
+          history.push("/admin/dashboard");
+        } else if (res.data.loginUser.role === "user") {
+          history.push("/user/dashboard");
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -33,22 +37,32 @@ function LoginPage() {
     handleLogin({ username: username, password: password });
   };
 
-  if (session) { null } // empty code to prevent errors on session not being used.
+  if (session) {
+    null;
+  } // empty code to prevent errors on session not being used.
 
-    return (
-        <div>
+  return (
+    <>
+      <div>
         <h1 className="login"> Login page </h1>
         <form onSubmit={handleSubmit}>
-        <input name="username" placeholder="username" />
-        <input name="password" placeholder="Password" />
-        <button>Login</button>
-      </form>
-      {networkStatus === "error" ? (
-        <div>
-          <h1>Incorrect login details. Please try again</h1>
-        </div>
-      ) : null}
-        </div>
+          <input name="username" placeholder="username" />
+          <input name="password" placeholder="Password" />
+          <button>Login</button>
+        </form>
+        {networkStatus === "error" ? (
+          <div>
+            <h1>Incorrect login details. Please try again</h1>
+          </div>
+        ) : null}
+      </div>
+
+      <div>
+        <NavLink to="/user/new">
+          <p>Create a new user</p>
+        </NavLink>
+      </div>
+    </>
   );
 }
 

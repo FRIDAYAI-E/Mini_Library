@@ -14,72 +14,80 @@ import NewUser from "./components/users/NewUser";
 import LoginPage from "./components/LoginPage";
 import LogoutPage from "./components/LogoutPage";
 import HomePage from "./components/HomePage";
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import GlobalStyles from './components/GlobalStyles';
+import theme from './theme';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          {/* <Route exact path="/">
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Router>
+          <div className="App">
+            <Switch>
+              {/* <Route exact path="/">
           <Login />
         </Route> */}
-          {
-            //*      ====================    All routes  =========================
-          }
-          <Route exact path="/">
-            <HomePage />
-          </Route>
+              {
+                //*      ====================    All routes  =========================
+              }
+              <Route exact path="/">
+                <HomePage />
+              </Route>
 
-          <Route path="/login">
-            <LoginPage />
-          </Route>
+              <Route path="/login">
+                <LoginPage />
+              </Route>
 
-          {
-            //!      ====================    Admin routes  =========================
-          }
+              {
+                //!      ====================    Admin routes  =========================
+              }
 
-          <Route path="/admin/dashboard">
-            <AdminDashboard />
-          </Route>
-          <Route path="/admin/managebooks/:id/edit">
-            <BookUpdateCreate action="UPDATE" />
-          </Route>
-          <Route path="/admin/managebooks">
-            <ManageBooks />
-          </Route>
-          <Route path="/admin/addcollection">
-            <BookUpdateCreate action="CREATE" />
-          </Route>
-          <Route path="/admin/managereturns">
-            <ManageReturns />
-          </Route>
-          {
-            //!?     ====================    User routes  =========================
-          }
-          <Route path="/user/new">
-            <NewUser />
-          </Route>
-          <Route path="/user/dashboard">
-            <UserDashboard />
-          </Route>
-          <Route path="/browseBooks/:id">
-            <BookDetails />
-          </Route>
-          <Route path="/browseBooks">
-            <BrowseBooks />
-          </Route>
-          <Route path="/books/success">
-            <SuccessBooking />
-          </Route>
-          {
-            //!      ====================    General routes  =========================
-          }
-          <Route path="/logout">
-            <LogoutPage />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+              <Route path="/admin/dashboard">
+                <AdminDashboard />
+              </Route>
+              <Route path="/admin/managebooks/:id/edit">
+                <BookUpdateCreate action="UPDATE" />
+              </Route>
+              <Route path="/admin/managebooks">
+                <ManageBooks />
+              </Route>
+              <Route path="/admin/addcollection">
+                <BookUpdateCreate action="CREATE" />
+              </Route>
+              <Route path="/admin/managereturns">
+                <ManageReturns />
+              </Route>
+              {
+                //!?     ====================    User routes  =========================
+              }
+              <Route path="/user/new">
+                <NewUser />
+              </Route>
+              <Route path="/user/dashboard">
+                <UserDashboard />
+              </Route>
+              <Route path="/browseBooks/:id">
+                <BookDetails />
+              </Route>
+              <Route path="/browseBooks">
+                <BrowseBooks />
+              </Route>
+              <Route path="/books/success">
+                <SuccessBooking />
+              </Route>
+              {
+                //!      ====================    General routes  =========================
+              }
+              <Route path="/logout">
+                <LogoutPage />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 
