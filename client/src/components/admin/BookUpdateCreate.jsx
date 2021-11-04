@@ -68,22 +68,20 @@ const BookUpdateCreate = (props) => {
         "You are about to delete the selected collection. This action cannot be undone. Are you sure?"
       )
     ) {
-      console.log(`${submission.title} deleted`);
+      axios.delete(`/api/book/${id}`).then((res) => {
+        alert(`${res.data} successfully deleted`);
+        history.push("/admin/managebooks");
+      });
     }
   };
 
   return (
     <div>
       <Navbar />
-      <Box>
-        {action === "CREATE" ? (
-          ""
-        ) : (
-          <Button variant="contained" color="error" onClick={handleDelete}>
-            Delete Book
-          </Button>
-        )}
-        {/* //! ADD CONFIRMATION */}
+      <Box class={action === "UPDATE" ? "" : "disabled"}>
+        <Button variant="contained" color="error" onClick={handleDelete}>
+          Delete Book
+        </Button>
       </Box>
       <Box>
         <form
