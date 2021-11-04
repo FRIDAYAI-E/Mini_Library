@@ -1,4 +1,10 @@
-import { Button, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar";
@@ -100,81 +106,102 @@ const BookUpdateCreate = (props) => {
       <Box className={status !== "pending" ? "disabled" : ""}>
         <CircularProgress />
       </Box>
-      <Box className={status === "pending" ? "disabled" : ""}>
-        <form
-          onSubmit={
-            action === "UPDATE"
-              ? handleSubmit(updateCollection)
-              : handleSubmit(createCollection)
-          }
+      <Box
+        sx={{
+          mt: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        className={status === "pending" ? "disabled" : ""}
+        component="form"
+        onSubmit={
+          action === "UPDATE"
+            ? handleSubmit(updateCollection)
+            : handleSubmit(createCollection)
+        }
+        noValidate
+      >
+        <TextField
+          margin="normal"
+          required
+          label="title"
+          name="title"
+          autoFocus
+          onChange={(e) => {
+            handleChange(e, "title");
+          }}
+          value={submission.title}
+        />
+        <Select
+          margin="normal"
+          name="genre"
+          label="genre"
+          onChange={(e) => {
+            handleChange(e, "genre");
+          }}
+          required
+          value={submission.genre}
         >
-          <input
-            type="text"
-            name="title"
-            placeholder="title"
-            onChange={(e) => {
-              handleChange(e, "title");
-            }}
-            required
-            value={submission.title}
-          />
-          <select
-            name="genre"
-            id="genre"
-            onChange={(e) => {
-              handleChange(e, "genre");
-            }}
-            required
-            value={submission.genre}
-          >
-            {genre.map((g) => (
-              <option key={g} value={g}>
-                {g}
-              </option>
-            ))}
-          </select>
-          <input
-            type="number"
-            name="qty"
-            id="input-qty"
-            placeholder="Quantity"
-            onChange={(e) => {
-              handleChange(e, "qty");
-            }}
-            required
-            min={0}
-            value={submission.qty}
-          />
-          <input
-            type="text"
-            name="bookImg"
-            placeholder="Image Url"
-            onChange={(e) => {
-              handleChange(e, "bookImg");
-            }}
-            value={submission.bookImg}
-          />
-          <input
-            type="text"
-            name="author"
-            placeholder="Author"
-            onChange={(e) => {
-              handleChange(e, "author");
-            }}
-            required
-            value={submission.author}
-          />
-          <input
-            type="text"
-            name="description"
-            placeholder="Description"
-            onChange={(e) => {
-              handleChange(e, "description");
-            }}
-            value={submission.description}
-          />
-          <input type="submit" value="Confirm" />
-        </form>
+          {genre.map((g) => (
+            <MenuItem key={g} value={g}>
+              {g}
+            </MenuItem>
+          ))}
+        </Select>
+        <TextField
+          margin="normal"
+          type="number"
+          required
+          label="Quantity"
+          name="qty"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{ inputProps: { min: 0 } }}
+          autoFocus
+          min={0}
+          onChange={(e) => {
+            handleChange(e, "qty");
+          }}
+          value={submission.qty}
+        />
+        <TextField
+          margin="normal"
+          required
+          label="Image Url"
+          name="bookImg"
+          autoFocus
+          onChange={(e) => {
+            handleChange(e, "bookImg");
+          }}
+          value={submission.bookImg}
+        />
+        <TextField
+          margin="normal"
+          required
+          label="Author"
+          name="author"
+          autoFocus
+          onChange={(e) => {
+            handleChange(e, "author");
+          }}
+          value={submission.author}
+        />
+        <TextField
+          margin="normal"
+          required
+          label="Description"
+          name="description"
+          autoFocus
+          onChange={(e) => {
+            handleChange(e, "description");
+          }}
+          value={submission.description}
+        />
+        <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+          Confirm
+        </Button>
       </Box>
       <NavLink to={"/admin/managebooks"}>
         <Button>Cancel</Button>
