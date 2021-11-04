@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar";
@@ -14,10 +14,9 @@ import { sessionAtom } from "../LoginPage";
 const BookUpdateCreate = (props) => {
   const { action } = props;
   let history = useHistory();
-  // const [row] = useAtom(rowAtom);
+  const [status, setStatus] = useState("idle");
   const [genre, setGenre] = useState([]);
   const [submission, setSubmission] = useState({});
-  // const [entry, setEntry] = useState({});
 
   const data = useAtom(sessionAtom)[0];
 
@@ -29,7 +28,9 @@ const BookUpdateCreate = (props) => {
   isAuthenticated();
 
   useEffect(async () => {
+    setStatus("pending");
     const res = await axios.get("/api/book/genre");
+    setStatus("resolved");
     console.log(res.data);
     setGenre(res.data);
   }, []);
@@ -96,7 +97,10 @@ const BookUpdateCreate = (props) => {
           Delete Book
         </Button>
       </Box>
-      <Box>
+      <Box className={status !== "pending" ? "disabled" : ""}>
+        <CircularProgress />
+      </Box>
+      <Box className={status === "pending" ? "disabled" : ""}>
         <form
           onSubmit={
             action === "UPDATE"

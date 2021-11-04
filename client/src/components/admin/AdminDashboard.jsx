@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
 import Navbar from "../Navbar";
-import { Box, Button } from "@mui/material";
+import { Box, Button, LinearProgress } from "@mui/material";
 import TableComponent from "../TableComponent";
-import { sessionAtom } from "../LoginPage"
-import { useAtom } from 'jotai'
-import { withStyles } from '@mui/styles';
-
-
+import { sessionAtom } from "../LoginPage";
+import { useAtom } from "jotai";
+import { withStyles } from "@mui/styles";
 
 // import faker from "faker";
 // import NumberFormatter from "../NumberFormatter";
@@ -50,34 +48,35 @@ const columns = [
 
 const StyledButton = withStyles({
   root: {
-    backgroundColor: '#676767',
-    color: '#fff',
-    padding: '6px 12px',
-    '&:hover': {
-      backgroundColor: '#676767',
-      color: '#ffffff',
+    backgroundColor: "#676767",
+    color: "#fff",
+    padding: "6px 12px",
+    "&:hover": {
+      backgroundColor: "#676767",
+      color: "#ffffff",
+    },
   },
-}})(Button);
-
+})(Button);
 
 const AdminDashboard = () => {
+  const [status, setStatus] = useState("idle");
   const [books, setBooks] = useState([]);
 
-  const data = useAtom(sessionAtom)[0]
-  let history = useHistory()
+  const data = useAtom(sessionAtom)[0];
+  let history = useHistory();
 
   const isAuthenticated = () => {
-    if(data.loginUser === undefined) {
+    if (data.loginUser === undefined) {
       history.push("/login");
     }
-  }
-  isAuthenticated()
-
-
+  };
+  isAuthenticated();
 
   useEffect(() => {
     const getBooks = async () => {
+      setStatus("pending");
       const res = await axios.get("/api/admin/dashboard");
+      setStatus("resolved");
       const data = res.data.map((d) => ({
         title: d.title,
         genre: d.genre,
@@ -91,37 +90,15 @@ const AdminDashboard = () => {
     getBooks();
   }, []);
 
-  // const genre = ["Classics ", "Adventure", "Reference", "Mystery"];
-  // const genDemodata = (num) => {
-  //   const arr = [];
-  //   for (let i = 0; i < num; i++) {
-  //     const totalbooks = faker.datatype.number(10);
-  //     const loaned = faker.datatype.number(totalbooks);
-  //     const available = totalbooks - loaned;
-  //     arr.push({
-  //       id: i,
-  //       title: faker.lorem.words(Math.ceil(Math.random() * 7)),
-  //       genre: genre[Math.floor(Math.random() * genre.length)],
-  //       timesBorrowed: faker.datatype.number(1000),
-  //       available: available,
-  //       loaned: loaned,
-  //       totalbooks: totalbooks,
-  //     });
-  //   }
-  //   return arr;
-  // };
-
-  const clickRowHandler = (e, rowData) => {
-    console.log("Row click", rowData);
-    // history.push("/");
+  const rowClick = () => {
+    console.log("clicked");
   };
 
   return (
     <div>
       <Navbar />
       <Box>
-        <StyledButton 
-
+        <StyledButton
           onClick={() => {
             history.push("/admin/managebooks");
           }}
@@ -129,7 +106,7 @@ const AdminDashboard = () => {
         >
           Manage Books
         </StyledButton>
-        <StyledButton 
+        <StyledButton
           onClick={() => {
             history.push("/admin/managereturns");
           }}
@@ -138,7 +115,10 @@ const AdminDashboard = () => {
           Manage Returns
         </StyledButton>
       </Box>
-      <Box>
+      <Box className={status !== "pending" ? "disabled" : ""}>
+        <LinearProgress />
+      </Box>
+      <Box className={status === "pending" ? "disabled" : ""}>
         <TableComponent
           title="Books Overview"
           columns={columns}
@@ -149,17 +129,9 @@ const AdminDashboard = () => {
               fontSize: 15,
             },
           }}
-          click={clickRowHandler}
+          click={rowClick}
         />
       </Box>
-      {/* <NumberFormatter
-        inputVal={100000}
-        thousandsSeperated={true}
-        decimalPlaces={2}
-      />
-      <div>
-        <DateFormatter date={new Date()} format="dd-MMM-yyyy" />
-      </div> */}
     </div>
   );
 };
