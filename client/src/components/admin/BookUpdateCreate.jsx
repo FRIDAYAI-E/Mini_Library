@@ -1,6 +1,8 @@
 import {
   Button,
   CircularProgress,
+  Grid,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -109,9 +111,12 @@ const BookUpdateCreate = (props) => {
       <Box
         sx={{
           mt: 8,
+          width: "80%",
+          padding: "0 4rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          margin: "2rem auto",
         }}
         className={status === "pending" ? "disabled" : ""}
         component="form"
@@ -122,90 +127,116 @@ const BookUpdateCreate = (props) => {
         }
         noValidate
       >
-        <TextField
-          margin="normal"
-          required
-          label="title"
-          name="title"
-          autoFocus
-          onChange={(e) => {
-            handleChange(e, "title");
-          }}
-          value={submission.title}
-        />
-        <Select
-          margin="normal"
-          name="genre"
-          label="genre"
-          onChange={(e) => {
-            handleChange(e, "genre");
-          }}
-          required
-          value={submission.genre}
-        >
-          {genre.map((g) => (
-            <MenuItem key={g} value={g}>
-              {g}
-            </MenuItem>
-          ))}
-        </Select>
-        <TextField
-          margin="normal"
-          type="number"
-          required
-          label="Quantity"
-          name="qty"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{ inputProps: { min: 0 } }}
-          autoFocus
-          min={0}
-          onChange={(e) => {
-            handleChange(e, "qty");
-          }}
-          value={submission.qty}
-        />
-        <TextField
-          margin="normal"
-          required
-          label="Image Url"
-          name="bookImg"
-          autoFocus
-          onChange={(e) => {
-            handleChange(e, "bookImg");
-          }}
-          value={submission.bookImg}
-        />
-        <TextField
-          margin="normal"
-          required
-          label="Author"
-          name="author"
-          autoFocus
-          onChange={(e) => {
-            handleChange(e, "author");
-          }}
-          value={submission.author}
-        />
-        <TextField
-          margin="normal"
-          required
-          label="Description"
-          name="description"
-          autoFocus
-          onChange={(e) => {
-            handleChange(e, "description");
-          }}
-          value={submission.description}
-        />
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              label="title"
+              name="title"
+              autoFocus
+              onChange={(e) => {
+                handleChange(e, "title");
+              }}
+              value={submission.title}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              margin="normal"
+              type="number"
+              required
+              label="Quantity"
+              name="qty"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{ inputProps: { min: 0 } }}
+              autoFocus
+              min={0}
+              onChange={(e) => {
+                handleChange(e, "qty");
+              }}
+              value={submission.qty}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              margin="normal"
+              required
+              label="Image Url"
+              name="bookImg"
+              autoFocus
+              onChange={(e) => {
+                handleChange(e, "bookImg");
+              }}
+              value={submission.bookImg}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              margin="normal"
+              required
+              label="Author"
+              name="author"
+              autoFocus
+              onChange={(e) => {
+                handleChange(e, "author");
+              }}
+              value={submission.author}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <InputLabel id="genre-selector">Genre</InputLabel>
+            <Select
+              fullWidth
+              margin="normal"
+              labelId="genre-selector"
+              name="genre"
+              label="genre"
+              onChange={(e) => {
+                handleChange(e, "genre");
+              }}
+              required
+              value={submission.genre}
+            >
+              {genre.map((g) => (
+                <MenuItem key={g} value={g}>
+                  {g}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              multiline
+              margin="normal"
+              required
+              label="Description"
+              name="description"
+              autoFocus
+              onChange={(e) => {
+                handleChange(e, "description");
+              }}
+              value={submission.description}
+            />
+          </Grid>
+        </Grid>
         <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
           Confirm
         </Button>
       </Box>
-      <NavLink to={"/admin/managebooks"}>
-        <Button>Cancel</Button>
-      </NavLink>
+      <Box>
+        <NavLink to={"/admin/managebooks"}>
+          <Button>Cancel</Button>
+        </NavLink>
+      </Box>
     </div>
   );
 };
