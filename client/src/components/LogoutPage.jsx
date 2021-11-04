@@ -43,7 +43,9 @@ export default function Logout() {
           <Typography component="h1" variant="h3">
             Logout Successful!
           </Typography>
+          <Box m={1} pt={2}></Box>
           <Divider />
+          <Box m={1} pt={2}></Box>
           <Typography component="h1" variant="subtitle1">
             Please come back again soon!
           </Typography>
