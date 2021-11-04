@@ -86,3 +86,7 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.dashButton :hover {
+  background-color: yellow !important;
+}

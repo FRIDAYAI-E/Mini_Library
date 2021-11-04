@@ -64,7 +64,7 @@ function BrowseBooks() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(`/api/book`);
+        const response = await axios.get(`/api/browsebooks`);
         setStatus("loading");
         setBookData(response.data);
         setStatus("resolved");

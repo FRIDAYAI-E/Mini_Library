@@ -45,7 +45,7 @@ function LoginPage() {
       </form>
       {networkStatus === "error" ? (
         <div>
-          <h1>Incorrect login details. Please try again</h1>
+          <h5>Incorrect login details. Please try again</h5>
         </div>
       ) : null}
         </div>
