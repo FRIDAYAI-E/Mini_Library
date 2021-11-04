@@ -9,6 +9,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
 import format from "date-fns/format";
+import { add } from 'date-fns'
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,9 +35,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const UserDueTable = ({ loanData }) => {
+  
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 200 }} aria-label="customized table">
+      <Table sx={{ minWidth: 200}} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Title </StyledTableCell>
@@ -48,13 +51,13 @@ const UserDueTable = ({ loanData }) => {
               <StyledTableCell component="th" scope="row">
                 {book.bookID.title}
               </StyledTableCell>
-              {new Date() < new Date(book.dateReturned) ? (
+              {new Date() < new Date(add(new Date(book.dateBorrowed), {days: 7,})) ? (
                 <StyledTableCell align="center" sx={{ color: "black" }}>
-                  {format(new Date(book.dateReturned), "EEEE, MMMM do, yyyy")}
+                  {format(new Date(add(new Date(book.dateBorrowed), {days: 7,})), "EEEE, MMMM do, yyyy")}
                 </StyledTableCell>
               ) : (
                 <StyledTableCell align="center" sx={{ color: "red" }}>
-                  BOOK DUE : {format(new Date(book.dateReturned), "EEEE, MMMM do, yyyy")}
+                  BOOK DUE : {format(new Date(add(new Date(book.dateBorrowed), {days: 7,})), "EEEE, MMMM do, yyyy")}
                 </StyledTableCell>
               )}
             </StyledTableRow>

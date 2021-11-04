@@ -8,6 +8,8 @@ import { sessionAtom } from "../LoginPage"
 import { useAtom } from 'jotai'
 import { useHistory } from "react-router-dom";
 import Navbar from "../Navbar";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 
 
 
@@ -40,6 +42,22 @@ function userDashboard() {
     getData();
   }, []);
 
+  const BrowseBooksButton = styled(Button)({
+    marginBottom: 30,
+    padding: 4,
+    paddingLeft: 10,
+    paddingRight: 10,
+    textTransform: "none",
+    backgroundColor: "#bcbcbc",
+    borderColor: "#ABB2B9",
+    "&:hover": {
+      backgroundColor: "#ABB2B9",
+      borderColor: "#ABB2B9",
+      boxShadow: "none",
+    },
+  });
+
+
 
   return (
     <>
@@ -49,8 +67,11 @@ function userDashboard() {
           ( null ): (<h2 style={{color: "#676767"}}>Welcome {data?.loginUser?.username} </h2>)
         }
         <NavLink to={"/browsebooks"}>
-          <button>Browse Books!</button>
+        <BrowseBooksButton variant="contained">
+            Browse Books!
+          </BrowseBooksButton>
         </NavLink>
+
         {status === "resolved" ? (
           <>
           <UserDueTable loanData={loanData} />

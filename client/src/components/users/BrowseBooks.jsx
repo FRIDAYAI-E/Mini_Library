@@ -94,23 +94,24 @@ function BrowseBooks() {
                 title: "Title",
                 field: "title",
                 align: "left",
-                defaultSort: "asc",
               },
               {
                 title: "Genre",
                 field: "genre",
                 align: "justify",
               },
-              {
-                title: "Rating",
-                field: "rating",
-              },
               { title: "Author", field: "author", align: "justify" },
               {
                 title: "Availability",
                 field: "availability",
                 align: "justify",
-              },
+                cellStyle: 
+                (e, rowData)=> {
+                  if (rowData.availability === "unavailable") { return {color:"red", textTransform:"capitalize" }}
+                  else if (rowData.availability === "available")  {return {color:"green", textTransform:"capitalize" }}
+                },
+                defaultSort: "asc",
+                } 
             ]}
             title="aLibrary"
             data={bookData}
