@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
-import Navbar from "../Navbar";
-import { Box, Button, LinearProgress } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import TableComponent from "../TableComponent";
 import { sessionAtom } from "../LoginPage";
 import { useAtom } from "jotai";
-// import { withStyles } from "@mui/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-// import Paper from "@mui/material/Paper";
-// import Table from "@mui/material/Table";
-// import TableBody from "@mui/material/TableBody";
-// import TableCell from "@mui/material/TableCell";
-// import TableHead from "@mui/material/TableHead";
-// import TableRow from "@mui/material/TableRow";
-// import Typography from "@mui/material/Typography";
-// import Link from "@mui/material/Link";
-
-// import faker from "faker";
-// import NumberFormatter from "../NumberFormatter";
-// import DateFormatter from "../DateFormatter";
+//import Typography from "@mui/material/Typography";
+import Navbar from "../Navbar";
 
 const columns = [
   {
@@ -57,20 +45,7 @@ const columns = [
   },
 ];
 
-// const StyledButton = withStyles({
-//   root: {
-//     backgroundColor: "#676767",
-//     color: "#fff",
-//     padding: "6px 12px",
-//     "&:hover": {
-//       backgroundColor: "#ABB2B9",
-//       borderColor: "#ABB2B9",
-//       boxShadow: "none",
-//     },
-//   },
-// })(Button);
-
-const AdminDashboard = () => {
+function AdminDashboard() {
   const [status, setStatus] = useState("idle");
   const [books, setBooks] = useState([]);
 
@@ -83,6 +58,8 @@ const AdminDashboard = () => {
     }
   };
   isAuthenticated();
+
+  console.log(status);
 
   useEffect(() => {
     const getBooks = async () => {
@@ -109,11 +86,30 @@ const AdminDashboard = () => {
   return (
     <>
       <Navbar />
-      <CssBaseline />
-      <Box sx={{ display: "flex" }}>
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3} style={{ color: "primary" }}>
-            <Grid item style={{ display: "flex" }}>
+      <Container component="main">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Button
+                style={{ background: "primary" }}
+                fullwidth
+                variant="contained"
+                onClick={() => {
+                  history.push("/admin/managebooks");
+                }}
+              >
+                Manage Books
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <Button
                 fullwidth
                 variant="contained"
@@ -124,95 +120,102 @@ const AdminDashboard = () => {
                 Manage Return
               </Button>
             </Grid>
-            <Grid item style={{ display: "flex", alignItems: "center" }}>
-              <Button
-                fullwidth
-                variant="contained"
-                onClick={() => {
-                  history.push("/admin/managebooks");
-                }}
-              >
-                Manage Books
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <React.Fragment>
-                {/* <Table size="medium">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Title</TableCell>
-                        <TableCell>Genre</TableCell>
-                        <TableCell>Times Borrowed</TableCell>
-                        <TableCell>Available</TableCell>
-                        <TableCell>Loaned</TableCell>
-                        <TableCell align="right">Collection Total</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {books.map((row, id) => (
-                        <TableRow key={id}>
-                          <TableCell>{row.title}</TableCell>
-                          <TableCell>{row.genre}</TableCell>
-                          <TableCell>{row.timesBorrowed}</TableCell>
-                          <TableCell>{row.available}</TableCell>
-                          <TableCell>{row.loaned}</TableCell>
-                          <TableCell align="right">{row.qty}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table> */}
-                <TableComponent
-                  title="Books Overview"
-                  columns={columns}
-                  data={books}
-                  options={{
-                    pageSize: 10,
-                    rowStyle: {
-                      fontSize: 15,
-                    },
-                  }}
-                  click={rowClick}
-                />
-              </React.Fragment>
-            </Grid>
           </Grid>
-        </Container>
-        {/* <StyledButton
-          onClick={() => {
-            history.push("/admin/managebooks");
-          }}
-          variant="contained"
-        >
-          Manage Books
-        </StyledButton> */}
-        {/* <StyledButton
-          onClick={() => {
-            history.push("/admin/managereturns");
-          }}
-          variant="contained"
-        >
-          Manage Returns
-        </StyledButton> */}
-      </Box>
-      <Box className={status !== "pending" ? "disabled" : ""}>
-        <LinearProgress />
-      </Box>
-      <Box className={status === "pending" ? "disabled" : ""}>
-        {/* <TableComponent
+        </Box>
+        <TableComponent
           title="Books Overview"
           columns={columns}
           data={books}
           options={{
             pageSize: 10,
             rowStyle: {
-              fontSize: 15,
+              fontSize: 12,
             },
           }}
           click={rowClick}
-        /> */}
-      </Box>
+        />
+        {/* <div>
+              <h1 className="login"> Login page </h1>
+              <form onSubmit={handleSubmit}>
+                <input name="username" placeholder="username" />
+                <input name="password" placeholder="Password" />
+                <button>Login</button>
+              </form>
+              {networkStatus === "error" ? (
+                <div>
+                  <h1>Incorrect login details. Please try again</h1>
+                </div>
+              ) : null}
+            </div> */}
+        {/* <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="/user/new" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            {networkStatus === "error" ? (
+              <div>
+                <h1>Incorrect login details. Please try again</h1>
+              </div>
+            ) : null} */}
+        {/* </Box> */}
+        {/* <div>
+              <NavLink to="/user/new">
+                <p>Create a new user</p>
+              </NavLink>
+            </div> */}
+      </Container>
     </>
+    //     return (
+    //         <div>
+    //         <h1 className="login"> Login page </h1>
+    //         <form onSubmit={handleSubmit}>
+    //         <input name="username" placeholder="username" />
+    //         <input name="password" placeholder="Password" />
+    //         <button>Login</button>
+    //       </form>
+    //       {networkStatus === "error" ? (
+    //         <div>
+    //           <h5>Incorrect login details. Please try again</h5>
+    //         </div>
+    //       ) : null}
+    //         </div>
   );
-};
+}
 
 export default AdminDashboard;
