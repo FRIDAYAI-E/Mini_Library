@@ -9,6 +9,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { format } from "date-fns";
 import { useAtom } from "jotai";
 import { sessionAtom } from "./LoginPage";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import Sidebar from "./Sidebar";
 
@@ -97,7 +98,8 @@ export default function TemporaryDrawer() {
   // console.log("Test", data);
   // console.log("Role", data?.loginUser?.role);
   return (
-    <div>
+    <>
+      <CssBaseline />
       {data.loginUser === undefined ? (
         <div />
       ) : (
@@ -113,6 +115,6 @@ export default function TemporaryDrawer() {
           </Toolbar>
         </AppBar>
       )}
-    </div>
+    </>
   );
 }
