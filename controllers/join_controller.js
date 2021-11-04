@@ -24,20 +24,16 @@ const isAuth = (roleArr) => (req, res, next) => {
 router.get("/admin/dashboard", isAuth([SUPERUSER, ADMIN]), async (req, res) => {
   const data = [];
   for await (const b of Books.find({})) {
-
     const loan = await onLoan.find({
       bookID: b._id,
       $or: [{ dateReturned: "" }, { dateReturned: { $exists: false } }],
     });
-    console.log(loan);
-
     const loanHistory = await onLoan.find({ bookID: b._id });
     b._doc.timesBorrowed = loanHistory.length;
     b._doc.loaned = loan.length;
     b._doc.available = b._doc.qty - loan.length;
     data.push(b);
   }
-  // $or: [{ dateReturned: "" }, { dateReturned: { $exists: false } }],
   res.json(data);
 });
 
@@ -48,7 +44,6 @@ router.get(
   async (req, res) => {
     const data = [];
     for await (const b of Books.find({})) {
-
       const loan = await onLoan.find({
         bookID: b._id,
         $or: [{ dateReturned: "" }, { dateReturned: { $exists: false } }],

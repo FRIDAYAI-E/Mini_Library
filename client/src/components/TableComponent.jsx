@@ -16,16 +16,6 @@ import {
   ViewColumn,
   Info,
 } from "@material-ui/icons";
-// import {
-//   Paper,
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableContainer,
-//   TableHead,
-//   TableRow,
-// } from "@mui/material";
-// import { DataGrid } from "@mui/x-data-grid";
 
 const TableComponent = (props) => {
   const { id, title, columns, icons, options, data, click } = props;

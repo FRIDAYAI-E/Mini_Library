@@ -54,7 +54,7 @@ app.use("/api/session", sessionController);
 
 //* Routes
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/src", "index.html"));
+  res.sendFile(path.join(__dirname, "./client/build", "index.html"));
 });
 //! CHANGE BACK TO ".client/build" DURING DEPLOYMENT
 
