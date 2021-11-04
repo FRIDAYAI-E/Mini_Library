@@ -16,21 +16,21 @@ import { useAtom } from 'jotai'
 import { useHistory } from "react-router";
 
 
-const ManageReturns = () => {
-  const data = useAtom(sessionAtom)[0]
-  let history = useHistory()
-
+  
+  const ManageReturns = () => {
+    const [loans, setLoans] = useState([]);
+    const [checked, setChecked] = useState([]);
+    let history = useHistory()
+    
+const data = useAtom(sessionAtom)[0]
+  
   const isAuthenticated = () => {
     if(data.loginUser === undefined) {
       history.push("/login");
     }
   }
   isAuthenticated()
-
-const ManageReturns = () => {
-  const [loans, setLoans] = useState([]);
-  const [checked, setChecked] = useState([]);
-
+  
   useEffect(() => {
     const getActiveLoans = async () => {
       const res = await axios.get("/api/onloan/active");
