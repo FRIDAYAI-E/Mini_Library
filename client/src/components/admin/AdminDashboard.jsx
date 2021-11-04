@@ -112,7 +112,9 @@ const AdminDashboard = () => {
           title="Books Overview"
           columns={columns}
           data={books}
-          options={{ pageSize: 10 }}
+          options={{ pageSize: 10 , rowStyle: {
+            fontSize: 15,
+          },}}
           click={clickRowHandler}
         />
       </Box>

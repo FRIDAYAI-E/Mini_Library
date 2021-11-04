@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const onLoans = require("../models/onLoan.js");
+const onLoan = require("../models/onLoan.js");
 const seedOnLoans = require("../models/seed_onLoan.js");
 
 //* AUTH CHECK
@@ -21,7 +21,7 @@ const isAuth = (roleArr) => (req, res, next) => {
 
 //* CREATE LOAN ENTRY
 router.post("/", (req, res) => {
-  onLoans.create(req.body, (err, createdLoan) => {
+  onLoan.create(req.body, (err, createdLoan) => {
     if (err) {
       res.status(400).json({ error: err.message });
     }
@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
 //* GET LOANS BY USERID
 router.get("/:id", isAuth([SUPERUSER, USER, ADMIN]), async (req, res) => {
   const { id } = req.params;
-  onLoans
+  onLoan
     .find({ userID: id })
     .populate("bookID")
     .exec((err, foundonLoans) => {
@@ -44,7 +44,7 @@ router.get("/:id", isAuth([SUPERUSER, USER, ADMIN]), async (req, res) => {
 //* GET ENTIRE LOANS HISTORY
 router.get("/", isAuth([SUPERUSER, ADMIN]), (req, res) => {
   try {
-    onLoans.find({}, (err, foundonLoans) => {
+    onLoan.find({}, (err, foundonLoans) => {
       if (err) {
         res.status(400).json({ error: err.message });
       }
@@ -58,8 +58,8 @@ router.get("/", isAuth([SUPERUSER, ADMIN]), (req, res) => {
 //* SEED LOAN ENTRIES
 router.get("/seed", isAuth([SUPERUSER]), async (req, res) => {
   try {
-    await onLoans.deleteMany({});
-    const seed = await onLoans.create(seedOnLoans);
+    await onLoan.deleteMany({});
+    const seed = await onLoan.create(seedOnLoans);
     res.send(seed);
   } catch (err) {
     res.send(err.message);
@@ -68,7 +68,7 @@ router.get("/seed", isAuth([SUPERUSER]), async (req, res) => {
 
 //* DELETE ENTRIES (No use-case other than dev)
 router.delete("/:id", isAuth([SUPERUSER]), (req, res) => {
-  onLoans.findByIdAndDelete(req.params.id, (err, deletedonLoan) => {
+  onLoan.findByIdAndDelete(req.params.id, (err, deletedonLoan) => {
     if (err) {
       res.status(400).json({ error: err.message });
     }
@@ -78,7 +78,7 @@ router.delete("/:id", isAuth([SUPERUSER]), (req, res) => {
 
 //* UPDATE SPECIFIC ENTRY (For ADMIN to enter dateReturned)
 router.put("/:id", isAuth([SUPERUSER, ADMIN]), (req, res) => {
-  onLoans.findByIdAndUpdate(
+  onLoan.findByIdAndUpdate(
     req.params.id,
     req.body,
     { new: true },
