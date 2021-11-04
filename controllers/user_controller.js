@@ -20,6 +20,26 @@ const isAuth = (roleArr) => (req, res, next) => {
   res.status(404).json({ message: "Authentication required" });
 };
 
+//!   =========================  ANGEAL ADDED THIS TO CHECK FOR USERNAME  ============================
+//* checks username
+router.post("/check", (req, res) => {
+  Users.find({
+    $or: [
+      { username: req.body.username },
+      { email: req.body.email }
+    ]
+  }, (err, checkedUser) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else {
+      res.status(200).json(checkedUser);
+    }
+  });
+});
+//!   =========================  ANGEAL ADDED THIS TO CHECK FOR USERNAME  ============================
+
+
+
 //* ROUTER => CREATE NEW SIGNUP
 router.post("/", (req, res) => {
   req.body.password = bcrypt.hashSync(
