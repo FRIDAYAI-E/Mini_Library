@@ -12,8 +12,7 @@ export default function Logout() {
     const fetchData = async () => {
       setStatus("pending");
       await axios.delete(`/api/session`).then((res) => {
-        console.log(res);
-        console.log(res.data);
+        if (res.data){null}
         setStatus("completed");
       });
     };

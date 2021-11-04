@@ -117,7 +117,7 @@ function BrowseBooks() {
             data={bookData}
             options={{
               pageSize: 10,
-              pageSizeOptions: [5, 10, 50],
+              pageSizeOptions: [5, 10, 20],
               draggable: false,
               maxBodyHeight: "100vh",
               tableLayout: "auto",
