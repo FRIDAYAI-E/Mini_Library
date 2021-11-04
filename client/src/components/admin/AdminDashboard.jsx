@@ -4,6 +4,12 @@ import axios from "axios";
 import Navbar from "../Navbar";
 import { Box, Button } from "@mui/material";
 import TableComponent from "../TableComponent";
+import { sessionAtom } from "../LoginPage"
+import { useAtom } from 'jotai'
+import { withStyles } from '@mui/styles';
+
+
+
 // import faker from "faker";
 // import NumberFormatter from "../NumberFormatter";
 // import DateFormatter from "../DateFormatter";
@@ -42,8 +48,33 @@ const columns = [
   },
 ];
 
+const StyledButton = withStyles({
+  root: {
+    backgroundColor: '#676767',
+    color: '#fff',
+    padding: '6px 12px',
+    '&:hover': {
+      backgroundColor: '#676767',
+      color: '#ffffff',
+  },
+}})(Button);
+
+
 const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
+
+  const data = useAtom(sessionAtom)[0]
+  let history = useHistory()
+
+  const isAuthenticated = () => {
+    if(data.loginUser === undefined) {
+      history.push("/login");
+    }
+  }
+  isAuthenticated()
+
+
+
   useEffect(() => {
     const getBooks = async () => {
       const res = await axios.get("/api/admin/dashboard");
@@ -80,7 +111,6 @@ const AdminDashboard = () => {
   //   return arr;
   // };
 
-  let history = useHistory();
   const clickRowHandler = (e, rowData) => {
     console.log("Row click", rowData);
     // history.push("/");
@@ -90,22 +120,22 @@ const AdminDashboard = () => {
     <div>
       <Navbar />
       <Box>
-        <Button
+        <StyledButton 
           onClick={() => {
             history.push("/admin/managebooks");
           }}
           variant="contained"
         >
           Manage Books
-        </Button>
-        <Button
+        </StyledButton>
+        <StyledButton 
           onClick={() => {
             history.push("/admin/managereturns");
           }}
           variant="contained"
         >
           Manage Returns
-        </Button>
+        </StyledButton>
       </Box>
       <Box>
         <TableComponent

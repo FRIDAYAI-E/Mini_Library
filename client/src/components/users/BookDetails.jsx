@@ -1,16 +1,16 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
+import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { arrAtom } from "./BrowseBooks";
 import { useAtom } from "jotai";
 import { useHistory } from "react-router-dom";
 import { sessionAtom } from "../LoginPage";
-import { add } from 'date-fns'
+// import { add } from 'date-fns'
 import Navbar from "../Navbar";
 
 function BookDetails() {
@@ -24,7 +24,7 @@ function BookDetails() {
   const BookingButton = styled(Button)({
     display: "flex",
     marginTop: 20,
-    padding: 0,
+    padding: 2,
     textTransform: "none",
     backgroundColor: "#ABB2B9",
     borderColor: "#ABB2B9",
@@ -34,6 +34,8 @@ function BookDetails() {
       boxShadow: "none",
     },
   });
+
+  const availabilityStyle = {textTransform:"capitalize", fontWeight: "bold"}
 
   const data = useAtom(sessionAtom)[0];
   const bookData = useAtom(arrAtom)[0];
@@ -49,12 +51,12 @@ function BookDetails() {
 
   const handleBooking = async (bookID, sessionID) => {
     const newDate = new Date()
-    const returnDate = add(new Date(), {days: 7,})
+    // const returnDate = add(new Date(), {days: 7,})
     const data = {
       bookID: bookID,
       userID: sessionID,
       dateBorrowed: newDate,
-      dateReturned: returnDate,
+      dateReturned: "",
     };
     await axios.post(`/api/onLoan/`, data).then((res) => {
       console.log(res.data);
@@ -69,7 +71,8 @@ function BookDetails() {
           p: 4,
           margin: "auto",
           marginTop: 10,
-          maxWidth: 800,
+          paddingTop: 8,
+          maxWidth: 900,
           flexGrow: 1,
           maxheight: 400,
         }}
@@ -107,9 +110,12 @@ function BookDetails() {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle1" component="div">
-                Availability: Yes
-              </Typography>
+              {bookData.availability === "available" ? (
+              <Typography variant="subtitle1" component="div" sx={{...availabilityStyle, color:"green"}}>
+                {bookData.availability}
+              </Typography>) : (<Typography variant="subtitle1" component="div" sx={{...availabilityStyle, color:"red"}}>
+                {bookData.availability}
+              </Typography>)}
             </Grid>
           </Grid>
         </Grid>

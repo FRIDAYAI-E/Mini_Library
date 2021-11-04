@@ -11,10 +11,23 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar";
+import { sessionAtom } from "../LoginPage"
+import { useAtom } from 'jotai'
 import { useHistory } from "react-router";
 
+
 const ManageReturns = () => {
-  let history = useHistory();
+  const data = useAtom(sessionAtom)[0]
+  let history = useHistory()
+
+  const isAuthenticated = () => {
+    if(data.loginUser === undefined) {
+      history.push("/login");
+    }
+  }
+  isAuthenticated()
+
+const ManageReturns = () => {
   const [loans, setLoans] = useState([]);
   const [checked, setChecked] = useState([]);
 
@@ -73,6 +86,7 @@ const ManageReturns = () => {
       </ListItemButton>
     </ListItem>
   ));
+
 
   return (
     <div>
