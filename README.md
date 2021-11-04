@@ -13,13 +13,15 @@
 
 The objective of this project is to try to simulate the process of library book management system. From this project we will develop a reservation system that serve several functions,
 
-General User:
+General User: Create a new account for themselves - eserve the books in the system.
 
 - Creating new accounts for themselves
 - Edit of individual account
 - Reserve a book in the system
 
 Administrator:
+
+# General User: - Create a new account for themselves - eserve the books in the system.
 
 - Adding new books into the system
 - Edit current books descriptions
