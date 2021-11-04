@@ -23,7 +23,6 @@ const isAuth = (roleArr) => (req, res, next) => {
 
 //* CREATE BOOK COLLECTION ROUTE
 router.post("/", isAuth([SUPERUSER, ADMIN]), (req, res) => {
-  console.log(`Create book. req : ${req.body}`);
   Books.create(req.body, (err, createdBook) => {
     if (err) {
       res.status(400).json({ error: err.message });
@@ -67,7 +66,6 @@ router.get("/seed", async (req, res) => {
 // //* GET SPECIFIC BOOK COLLECTION
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  console.log("book edit route hit: " + id);
   Books.findById(id, (err, foundBooks) => {
     if (err) {
       res.status(400).json({ error: err.message });

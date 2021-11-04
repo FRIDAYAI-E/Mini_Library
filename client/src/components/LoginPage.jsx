@@ -138,6 +138,20 @@ function LoginPage() {
         </Box>
       </Container>
     </>
+//     return (
+//         <div>
+//         <h1 className="login"> Login page </h1>
+//         <form onSubmit={handleSubmit}>
+//         <input name="username" placeholder="username" />
+//         <input name="password" placeholder="Password" />
+//         <button>Login</button>
+//       </form>
+//       {networkStatus === "error" ? (
+//         <div>
+//           <h5>Incorrect login details. Please try again</h5>
+//         </div>
+//       ) : null}
+//         </div>
   );
 }
 

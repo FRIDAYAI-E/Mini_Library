@@ -6,7 +6,9 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import { NavLink, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-// import { useAtom } from "jotai";
+import { useAtom } from "jotai";
+import { sessionAtom } from "../LoginPage"
+
 // import { rowAtom } from "./ManageBooks";
 
 const BookUpdateCreate = (props) => {
@@ -16,6 +18,15 @@ const BookUpdateCreate = (props) => {
   const [genre, setGenre] = useState([]);
   const [submission, setSubmission] = useState({});
   // const [entry, setEntry] = useState({});
+
+  const data = useAtom(sessionAtom)[0]
+
+  const isAuthenticated = () => {
+    if(data.loginUser === undefined) {
+      history.push("/login");
+    }
+  }
+  isAuthenticated()
 
   useEffect(async () => {
     const res = await axios.get("/api/book/genre");
@@ -78,7 +89,7 @@ const BookUpdateCreate = (props) => {
   return (
     <div>
       <Navbar />
-      <Box class={action === "UPDATE" ? "" : "disabled"}>
+      <Box className={action === "UPDATE" ? "" : "disabled"}>
         <Button variant="contained" color="error" onClick={handleDelete}>
           Delete Book
         </Button>

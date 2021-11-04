@@ -7,6 +7,7 @@ import Navbar from "../Navbar";
 import TableComponent from "../TableComponent";
 import { NavLink } from "react-router-dom";
 import { atom, useAtom } from "jotai";
+import { sessionAtom } from "../LoginPage"
 
 const columns = [
   {
@@ -25,7 +26,15 @@ const columns = [
 export const rowAtom = atom("");
 
 const ManageBooks = () => {
+  const data = useAtom(sessionAtom)[0]
   let history = useHistory();
+
+  const isAuthenticated = () => {
+    if(data.loginUser === undefined) {
+      history.push("/login");
+    }
+  }
+  isAuthenticated()
 
   const [books, setBooks] = useState([]);
   useEffect(() => {

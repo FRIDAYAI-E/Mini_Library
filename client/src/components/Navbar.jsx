@@ -94,8 +94,8 @@ const activeRole = (users) => {
 export default function TemporaryDrawer() {
   const data = useAtom(sessionAtom)[0];
   // activeRole(data.loginUser);
-  console.log("Test", data);
-  console.log("Role", data?.loginUser?.role);
+  // console.log("Test", data);
+  // console.log("Role", data?.loginUser?.role);
   return (
     <div>
       {data.loginUser === undefined ? (

@@ -1,23 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { intervalToDuration } from "date-fns";
+import { add } from 'date-fns'
+
 
 function UserFines({ loanData }) {
-
   let totalFineAmount = 0;
-  const calculateFineAmount = (dateReturned) => {
+  const calculateFineAmount = (dueDate) => {
     const result = intervalToDuration({
       start: new Date(),
-      end: new Date(dateReturned),
+      end: new Date(dueDate),
     });
     const fineAmount = result.days * 0.2;
     return fineAmount;
   };
 
   loanData.map((book) => {
-    const dateReturn = book.dateReturned;
-    if (new Date(dateReturn) < new Date()) {
-      totalFineAmount = totalFineAmount + calculateFineAmount(dateReturn);
+    const dueDate = add(new Date(book.dateBorrowed), {days: 7,})
+    if (new Date(dueDate) < new Date()) {
+      totalFineAmount = totalFineAmount + calculateFineAmount(dueDate);
       return totalFineAmount;
     } 
   });
