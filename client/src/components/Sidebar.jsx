@@ -51,7 +51,23 @@ export default function sidebar(props) {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <Avatar alt="User" />
+      <Box
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          p: 2,
+        }}
+      >
+        <Avatar
+          sx={{
+            cursor: "pointer",
+            width: 64,
+            height: 64,
+          }}
+          alt="User"
+        />
+      </Box>
       <Divider />
       <List>
         {props.menuItem.map((element, index) => (
@@ -65,10 +81,20 @@ export default function sidebar(props) {
           </ListItem>
         ))}
       </List>
+
       <Divider />
+
       <List>
         {standardItems.map((element, index) => (
-          <ListItem button key={index}>
+          <ListItem
+            disableGutters
+            button
+            key={index}
+            sx={{
+              display: "flex",
+              py: 0,
+            }}
+          >
             <ListItemIcon>{element.listIcons}</ListItemIcon>
             <ListItemText
               primary={
