@@ -4,7 +4,6 @@
 
 - [Introduction](#introduction)
 - [Wireframe](#wireframe)
-- [Features](#feature)
 - [Technologies](#technologies)
 - [Setup](#setup)
 - [Important Resources](#important-resources)
@@ -14,27 +13,42 @@
 
 The objective of this project is to try to simulate the process of library book management system. From this project we will develop a reservation system that serve several functions,
 
-General User:  Create a new account for themselves - eserve the books in the system.
+General User: Create a new account for themselves - eserve the books in the system.
 
-- Create a new account for themselves
+- Creating new accounts for themselves
 - Edit of individual account
-- Reserve the book in the system
+- Reserve a book in the system
 
-Adminstrator:
+Administrator:
 
-- Add new books
-- Edit current books
-- Handling of book returning
-=======
-General User: - Create a new account for themselves - eserve the books in the system.
+# General User: - Create a new account for themselves - eserve the books in the system.
+
+- Adding new books into the system
+- Edit current books descriptions
+- Facilitating loans and returns of books
 
 ## Wireframe
 
-How we will be planning to do the project and also include in all the different UX expereince flow, database set-up and all the different configuration
+The wireframe covers the following components:
 
-## Features
+### User_Wireframe
 
-The system consist of the following features:
+![User_wireframe](./readme_img/User_wireframe.png)
+The basic features of the wireframe encompasses the abovementioned functionalities. The design concept for the user experience is ‘simplicity’ where users can have a glance of all the books they have borrowed and yet to return. This serve as a subtle reminder to them on returning the book.
+
+The subsequent pages allow users to browse through all the books that are available in the system with 3 different filtering functions (title, genre and author). During the checkout process, we have embedded an limiting function where users will not be able to check out any new books when they exceeded their borrowing limit of 5 books.
+
+After books are checkout, a confirmation code will be presented to the users.
+
+### Admin_Wireframe
+
+![Admin_wireframe](./readme_img/admin_wireframe.png)
+
+The administration interface also focus on simplicity where admin personnel will be presented with important information such as books loans that should be returned back to the library. This would direct their attention to send reminders to the users.
+
+The subsequent pages perform the following actions of adding new books in the library or update the current books.
+
+The final function is to update the system when users returns their books and the library will be updated accordingly.
 
 ## Technologies
 
@@ -60,8 +74,10 @@ To run this project, install it locally using npm:
 
 ```
 $ git clone
-$ npm install
+$ cd client && npm install
 $ npm start
+$ npm install
+$ npm run dev
 ```
 
 ## Important Resources
