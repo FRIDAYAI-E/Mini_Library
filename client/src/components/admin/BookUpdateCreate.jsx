@@ -38,7 +38,7 @@ const BookUpdateCreate = (props) => {
 
   useEffect(async () => {
     if (action === "UPDATE") {
-      const res = await axios.put(`/api/book/${id}`);
+      const res = await axios.get(`/api/book/${id}`);
       setSubmission(res.data);
     }
   }, [id]);
@@ -60,37 +60,48 @@ const BookUpdateCreate = (props) => {
       });
   };
 
-  const handleSubmit = (e) => {
+  const updateCollection = async (collectionObj) => {
+    await axios
+      .put(`/api/book/${id}`, collectionObj)
+      .then((res) => console.log(`Update successful: ${res.data}`));
+  };
+
+  const handleSubmit = (apiMethod) => (e) => {
     e.preventDefault();
-    createCollection(submission);
+    apiMethod(submission);
     history.push("/admin/managebooks");
   };
 
-  // const handleUpdates = async (e) => {
-  // e.preventDefault();
-  // await axios.get("/api/book/${id}", setsubmission)
-  // .then((res) => {
-  //  console.log(res);
-  //  console.log(res.data);
-  //
-
-  // }
+  const handleDelete = (e) => {
+    e.preventDefault();
+    if (
+      confirm(
+        "You are about to delete the selected collection. This action cannot be undone. Are you sure?"
+      )
+    ) {
+      axios.delete(`/api/book/${id}`).then((res) => {
+        alert(`${res.data} successfully deleted`);
+        history.push("/admin/managebooks");
+      });
+    }
+  };
 
   return (
     <div>
       <Navbar />
-      <Box>
-        {action === "CREATE" ? (
-          ""
-        ) : (
-          <Button variant="contained" color="error">
-            Delete Book
-          </Button>
-        )}
-        {/* //! ADD CONFIRMATION */}
+      <Box className={action === "UPDATE" ? "" : "disabled"}>
+        <Button variant="contained" color="error" onClick={handleDelete}>
+          Delete Book
+        </Button>
       </Box>
       <Box>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={
+            action === "UPDATE"
+              ? handleSubmit(updateCollection)
+              : handleSubmit(createCollection)
+          }
+        >
           <input
             type="text"
             name="title"
