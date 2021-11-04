@@ -39,21 +39,19 @@ const BookUpdateCreate = (props) => {
   };
 
   const createCollection = (collectionObj) => {
+    console.log(`createCol: ${JSON.stringify(collectionObj)}`);
     axios
       .post("/api/book", collectionObj)
-      .then(console.log(`New collection created successfully`));
+      .then((res) =>
+        console.log(`New collection created successfully: ${res.data}`)
+      )
+      .catch((err) => {
+        console.log(`createcollection err: ${err}`);
+      });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const result = {};
-    // result.title = e.target.title.value;
-    // result.genre = e.target.genre.value;
-    // result.qty = e.target.qty.value;
-    // result.bookImg = e.target.bookImg.value;
-    // result.author = e.target.author.value;
-    // result.description = e.target.description.value;
-    // console.log("create collection", result);
     createCollection(submission);
     history.push("/admin/managebooks");
   };
@@ -80,7 +78,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "title");
             }}
-            value={action === "UPDATE" ? submission.title : ""}
+            value={submission.title}
           />
           <select
             name="genre"
@@ -88,7 +86,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "genre");
             }}
-            value={action === "UPDATE" ? submission.genre : ""}
+            value={submission.genre}
           >
             {genre.map((g) => (
               <option key={g} value={g}>
@@ -104,7 +102,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "qty");
             }}
-            value={action === "UPDATE" ? submission.qty : ""}
+            value={submission.qty}
           />
           <input
             type="text"
@@ -113,7 +111,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "bookImg");
             }}
-            value={action === "UPDATE" ? submission.bookImg : ""}
+            value={submission.bookImg}
           />
           <input
             type="text"
@@ -122,7 +120,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "author");
             }}
-            value={action === "UPDATE" ? submission.author : ""}
+            value={submission.author}
           />
           <input
             type="text"
@@ -131,7 +129,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "description");
             }}
-            value={action === "UPDATE" ? submission.description : ""}
+            value={submission.description}
           />
           <input type="submit" value="Confirm" />
         </form>

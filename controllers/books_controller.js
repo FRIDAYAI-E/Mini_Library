@@ -23,6 +23,7 @@ const isAuth = (roleArr) => (req, res, next) => {
 
 //* CREATE BOOK COLLECTION ROUTE
 router.post("/", isAuth([SUPERUSER, ADMIN]), (req, res) => {
+  console.log(`Create book. req : ${req.body}`);
   Books.create(req.body, (err, createdBook) => {
     if (err) {
       res.status(400).json({ error: err.message });
