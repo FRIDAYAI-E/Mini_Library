@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
@@ -7,7 +7,7 @@ import Navbar from "../Navbar";
 import TableComponent from "../TableComponent";
 import { NavLink } from "react-router-dom";
 import { atom, useAtom } from "jotai";
-import { sessionAtom } from "../LoginPage"
+import { sessionAtom } from "../LoginPage";
 
 const columns = [
   {
@@ -26,20 +26,23 @@ const columns = [
 export const rowAtom = atom("");
 
 const ManageBooks = () => {
-  const data = useAtom(sessionAtom)[0]
+  const data = useAtom(sessionAtom)[0];
   let history = useHistory();
 
   const isAuthenticated = () => {
-    if(data.loginUser === undefined) {
+    if (data.loginUser === undefined) {
       history.push("/login");
     }
-  }
-  isAuthenticated()
+  };
+  isAuthenticated();
 
+  const [status, setStatus] = useState("idle");
   const [books, setBooks] = useState([]);
   useEffect(() => {
+    setStatus("pending");
     const getBooks = async () => {
       const res = await axios.get("/api/book");
+      setStatus("resolved");
       setBooks(res.data);
     };
     getBooks();
@@ -68,15 +71,23 @@ const ManageBooks = () => {
           Add New Collection
         </Button>
       </Box>
-      <TableComponent
-        title="Books Collection"
-        columns={columns}
-        data={books}
-        options={{ pageSize: 10 , rowStyle: {
-          fontSize: 15,
-        },}}
-        click={clickHandler}
-      />
+      <Box className={status !== "pending" ? "disabled" : ""}>
+        <LinearProgress />
+      </Box>
+      <Box className={status === "pending" ? "disabled" : ""}>
+        <TableComponent
+          title="Books Collection"
+          columns={columns}
+          data={books}
+          options={{
+            pageSize: 10,
+            rowStyle: {
+              fontSize: 15,
+            },
+          }}
+          click={clickHandler}
+        />
+      </Box>
       <NavLink to={"/admin/dashboard"}>
         <Button>Back</Button>
       </NavLink>
