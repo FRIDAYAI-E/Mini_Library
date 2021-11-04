@@ -52,8 +52,9 @@ const StyledButton = withStyles({
     color: "#fff",
     padding: "6px 12px",
     "&:hover": {
-      backgroundColor: "#676767",
-      color: "#ffffff",
+      backgroundColor: "#ABB2B9",
+      borderColor: "#ABB2B9",
+      boxShadow: "none",
     },
   },
 })(Button);

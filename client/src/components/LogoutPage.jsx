@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Logout() {
   const [status, setStatus] = useState("idle");
+  if (status) {null}
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,11 +22,11 @@ export default function Logout() {
 
   return (
     <div>
-      <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-        You have logout {status}
+      <Typography id="keep-mounted-modal-title" variant="h4" component="h2" sx={{marginTop:30}}>
+        You have logged out 
       </Typography>
       <NavLink to={"/"}>
-            <p style={{textDecoration: "none",  color: "#0060B6"}}> Home </p>
+            <p style={{textDecoration: "none",  color: "#aaaaa", fontSize:18}}> back to home </p>
       </NavLink>
     </div>
   );
