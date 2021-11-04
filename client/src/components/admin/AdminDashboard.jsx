@@ -89,7 +89,7 @@ const AdminDashboard = () => {
   return (
     <div>
       <Navbar />
-      <Box>
+      <Box position="flex">
         <Button
           onClick={() => {
             history.push("/admin/managebooks");
@@ -112,9 +112,12 @@ const AdminDashboard = () => {
           title="Books Overview"
           columns={columns}
           data={books}
-          options={{ pageSize: 10 , rowStyle: {
-            fontSize: 15,
-          },}}
+          options={{
+            pageSize: 10,
+            rowStyle: {
+              fontSize: 15,
+            },
+          }}
           click={clickRowHandler}
         />
       </Box>
