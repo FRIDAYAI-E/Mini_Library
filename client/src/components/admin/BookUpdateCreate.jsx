@@ -7,7 +7,7 @@ import axios from "axios";
 import { NavLink, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAtom } from "jotai";
-import { sessionAtom } from "../LoginPage"
+import { sessionAtom } from "../LoginPage";
 
 // import { rowAtom } from "./ManageBooks";
 
@@ -19,14 +19,14 @@ const BookUpdateCreate = (props) => {
   const [submission, setSubmission] = useState({});
   // const [entry, setEntry] = useState({});
 
-  const data = useAtom(sessionAtom)[0]
+  const data = useAtom(sessionAtom)[0];
 
   const isAuthenticated = () => {
-    if(data.loginUser === undefined) {
+    if (data.loginUser === undefined) {
       history.push("/login");
     }
-  }
-  isAuthenticated()
+  };
+  isAuthenticated();
 
   useEffect(async () => {
     const res = await axios.get("/api/book/genre");
@@ -40,8 +40,10 @@ const BookUpdateCreate = (props) => {
     if (action === "UPDATE") {
       const res = await axios.get(`/api/book/${id}`);
       setSubmission(res.data);
+    } else {
+      setSubmission({ ...submission, genre: genre[0] });
     }
-  }, [id]);
+  }, [id, genre]);
 
   const handleChange = (e, field) => {
     e.preventDefault();
@@ -109,6 +111,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "title");
             }}
+            required
             value={submission.title}
           />
           <select
@@ -117,6 +120,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "genre");
             }}
+            required
             value={submission.genre}
           >
             {genre.map((g) => (
@@ -133,6 +137,8 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "qty");
             }}
+            required
+            min={0}
             value={submission.qty}
           />
           <input
@@ -151,6 +157,7 @@ const BookUpdateCreate = (props) => {
             onChange={(e) => {
               handleChange(e, "author");
             }}
+            required
             value={submission.author}
           />
           <input
