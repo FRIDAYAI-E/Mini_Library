@@ -25,7 +25,6 @@ function LoginPage() {
       .then((res) => {
         setSession(res.data);
         setNetworkStatus("resolved");
-        console.log("Text", res.data);
         if (res.data.loginUser.role === "admin") {
           history.push("/admin/dashboard");
         } else if (res.data.loginUser.role === "user") {
@@ -42,7 +41,6 @@ function LoginPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target);
     const username = event.target.username.value;
     const password = event.target.password.value;
     handleLogin({ username: username, password: password });

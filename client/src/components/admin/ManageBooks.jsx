@@ -17,6 +17,12 @@ const columns = [
     defaultSort: "asc",
   },
   {
+    field: "author",
+    title: "Author",
+    align: "justify",
+  },
+
+  {
     field: "genre",
     title: "Genre",
     align: "justify",
@@ -61,6 +67,13 @@ const ManageBooks = () => {
       <Navbar />
       <Box>
         <Button
+          sx={{
+            "&:hover": {
+              backgroundColor: "#ABB2B9",
+              borderColor: "#ABB2B9",
+              boxShadow: "none",
+            },
+          }}
           onClick={() => {
             setRow(null);
             console.log(row);

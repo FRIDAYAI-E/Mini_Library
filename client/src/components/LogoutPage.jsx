@@ -13,13 +13,13 @@ import quote from "./pic/quote.png";
 
 export default function Logout() {
   const [status, setStatus] = useState("idle");
+  if (status) {null}
 
   useEffect(() => {
     const fetchData = async () => {
       setStatus("pending");
       await axios.delete(`/api/session`).then((res) => {
-        console.log(res);
-        console.log(res.data);
+        if (res.data){null}
         setStatus("completed");
       });
     };
@@ -29,6 +29,7 @@ export default function Logout() {
   console.log(status);
 
   return (
+
     <>
       <Container component="main" maxWidth="sm">
         <CssBaseline />
@@ -60,5 +61,6 @@ export default function Logout() {
         </Box>
       </Container>
     </>
+
   );
 }

@@ -11,8 +11,12 @@ function UserFines({ loanData }) {
       start: new Date(),
       end: new Date(dueDate),
     });
-    const fineAmount = result.days * 0.2;
-    return fineAmount;
+    if(result.years > 0) {
+      const fineAmount = ((result.days * 0.2) + (result.months * 9) + (result.years * 144)) ** result.years
+      return fineAmount;
+    } else {const fineAmount = (result.days * 0.2) + (result.months * 9) + (result.years * 144)
+      return fineAmount
+    }
   };
 
   loanData.map((book) => {

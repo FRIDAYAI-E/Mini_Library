@@ -9,7 +9,7 @@ function NewUser() {
 
   const createNewUser = async (newUser) => {
     await axios.post("/api/user", newUser).then((res) => {
-      console.log(res.data);
+      if (res.data) {null} //empty code to prevent errors
     });
   };
 

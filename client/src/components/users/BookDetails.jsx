@@ -59,7 +59,7 @@ function BookDetails() {
       dateReturned: "",
     };
     await axios.post(`/api/onLoan/`, data).then((res) => {
-      console.log(res.data);
+      if (res.data) {null}
     });
     history.push("/books/success");
   };
