@@ -2,8 +2,14 @@ import * as React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import { NavLink } from "react-router-dom";
 
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import { Divider } from "@mui/material";
+import quote from "./pic/quote.png";
 
 export default function Logout() {
   const [status, setStatus] = useState("idle");
@@ -20,14 +26,37 @@ export default function Logout() {
     fetchData();
   }, []);
 
+  console.log(status);
+
   return (
-    <div>
-      <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-        You have logout {status}
-      </Typography>
-      <NavLink to={"/"}>
-            <p style={{textDecoration: "none",  color: "#0060B6"}}> Home </p>
-      </NavLink>
-    </div>
+    <>
+      <Container component="main" maxWidth="sm">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "Left",
+          }}
+        >
+          <Typography component="h1" variant="h3">
+            Logout Successful!
+          </Typography>
+          <Divider />
+          <Typography component="h1" variant="subtitle1">
+            Please come back again soon!
+          </Typography>
+          <Box m={2} pt={3}></Box>
+          <img src={quote} />
+          <Box m={2} pt={3}></Box>
+          <Grid item xs>
+            <Link href="/login" variant="body2">
+              {"Back to sign in"}
+            </Link>
+          </Grid>
+        </Box>
+      </Container>
+    </>
   );
 }
