@@ -123,7 +123,9 @@ function NewUser() {
               Sign Up
             </Button>
             {status === "unavailable" ? (
-              <h5>Sorry the username/email is taken </h5>
+              <Typography component="h1" variant="subtitle1" color="error">
+                Sorry the username/email is taken!
+              </Typography>
             ) : null}
             <Grid container justifyContent="flex-end">
               <Grid item>
