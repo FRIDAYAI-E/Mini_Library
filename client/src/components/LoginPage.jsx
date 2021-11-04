@@ -17,7 +17,8 @@ function LoginPage() {
       .then((res) => {
         setSession(res.data);
         setNetworkStatus("resolved");
-        history.push("/user/dashboard");
+        if(res.data.loginUser.role === "admin"){history.push("/admin/dashboard")}
+        else if (res.data.loginUser.role === "user") {history.push("/user/dashboard")}
       })
       .catch(function (error) {
         console.log(error);

@@ -46,7 +46,7 @@ function userDashboard() {
       <div>
       <Navbar />
         {data.loginUser === undefined ?
-          ( null ): (<h2>Welcome {data?.loginUser?.username} </h2>)
+          ( null ): (<h2 style={{color: "#676767"}}>Welcome {data?.loginUser?.username} </h2>)
         }
         <NavLink to={"/browsebooks"}>
           <button>Browse Books!</button>

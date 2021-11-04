@@ -2,6 +2,8 @@ import * as React from "react";
 //import axios from "axios";
 //import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import { NavLink } from "react-router-dom";
+
 
 export default function Logout() {
   // const [status, setStatus] = useState("idle");
@@ -25,6 +27,9 @@ export default function Logout() {
       <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
         You have logout
       </Typography>
+      <NavLink to={"/"}>
+            <p style={{textDecoration: "none",  color: "#0060B6"}}> Home </p>
+      </NavLink>
     </div>
   );
 }

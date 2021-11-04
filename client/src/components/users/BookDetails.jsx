@@ -68,6 +68,7 @@ function BookDetails() {
         sx={{
           p: 4,
           margin: "auto",
+          marginTop: 10,
           maxWidth: 800,
           flexGrow: 1,
           maxheight: 400,
