@@ -29,6 +29,23 @@ router.post("/", (req, res) => {
   });
 });
 
+//* GET ACTIVE LOANS
+router.get("/active", isAuth([SUPERUSER, ADMIN]), (req, res) => {
+  try {
+    onLoan.find(
+      { $or: [{ dateReturned: "" }, { dateReturned: { $exists: false } }] },
+      (err, foundonLoans) => {
+        if (err) {
+          res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(foundonLoans);
+      }
+    );
+  } catch (err) {
+    res.send(err.message);
+  }
+});
+
 //* GET LOANS BY USERID
 router.get("/:id", isAuth([SUPERUSER, USER, ADMIN]), async (req, res) => {
   const { id } = req.params;
@@ -36,7 +53,6 @@ router.get("/:id", isAuth([SUPERUSER, USER, ADMIN]), async (req, res) => {
     .find({ userID: id })
     .populate("bookID")
     .exec((err, foundonLoans) => {
-      console.log("foundonLoans", foundonLoans);
       res.status(200).json(foundonLoans);
     });
 });
@@ -78,8 +94,11 @@ router.delete("/:id", isAuth([SUPERUSER]), (req, res) => {
 
 //* UPDATE SPECIFIC ENTRY (For ADMIN to enter dateReturned)
 router.put("/:id", isAuth([SUPERUSER, ADMIN]), (req, res) => {
+  const { id } = req.params;
+  console.log(id);
   onLoan.findByIdAndUpdate(
-    req.params.id,
+    // req.params.id,
+    id,
     req.body,
     { new: true },
     (err, updatedonLoans) => {
