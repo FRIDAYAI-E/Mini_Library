@@ -106,7 +106,12 @@ export default function TemporaryDrawer() {
         <AppBar position="static" style={{ background: "#999999" }}>
           <Toolbar>
             <Sidebar menuItem={activeRole(data.role)} className="potato" />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              component="h1"
+              align="left"
+              sx={{ flexGrow: 1 }}
+            >
               aLibrary
             </Typography>
             <Typography>
