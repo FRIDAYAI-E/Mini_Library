@@ -53,7 +53,6 @@ function NewUser() {
     };
     checkUser(userDetails);
   };
-  console.log(status);
 
   return (
     <>
